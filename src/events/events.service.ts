@@ -24,4 +24,7 @@ export class EventsService {
   async update(id: string, eventCreateDto: EventCreateDto): Promise<IEvent> {
     return await this.eventModel.findByIdAndUpdate(id, eventCreateDto, {new: true}).exec();
   }
+  async delete(id: string) {
+    await this.eventModel.deleteOne({_id: id});
+  }
 }

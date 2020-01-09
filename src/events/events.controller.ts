@@ -1,4 +1,4 @@
-import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, HttpException, HttpStatus, Param, Patch, Post, Delete } from '@nestjs/common';
 import { EventsService } from './events.service';
 import {EventCreateDto} from './dto/event-create.dto';
 
@@ -33,5 +33,10 @@ export class EventsController {
         throw new HttpException('Event not found', HttpStatus.NOT_FOUND);
       }
       return result;
+    }
+
+  @Delete(':id')
+  async Delete(@Param('id') id){
+    await this._eventService.delete(id);
   }
 }
