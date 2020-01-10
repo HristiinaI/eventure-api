@@ -21,7 +21,7 @@ export class UsersService {
         }
     }
 
-    async findUserById(id: number): Promise<IUser> {
+    async findUserById(id: string): Promise<IUser> {
         try {
             return await this.userModel.findById(id).exec();
         } catch (Exception) {

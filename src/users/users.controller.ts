@@ -19,7 +19,7 @@ export class UsersController {
   }
 
   @Get(':id')
-  async findUserById(@Param(':id') id: number) {
+  async findUserById(@Param('id') id: string) {
       const result = await this._userService.findUserById(id);
       if (result == null) {
         throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
@@ -28,7 +28,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  async update(@Param(':id') id: number, @Body() userCreateDto: UsersCreateDto) {
+  async update(@Param('id') id: number, @Body() userCreateDto: UsersCreateDto) {
       const result = await this._userService.update(id, userCreateDto);
       if (result == null) {
         throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async Delete(@Param(':id') id: number) {
+  async Delete(@Param('id') id: number) {
     await this._userService.delete(id);
   }
 }
