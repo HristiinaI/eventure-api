@@ -5,7 +5,7 @@ import { UsersCreateDto} from './users-create.dto';
 @Controller('users')
 export class UsersController {
   // tslint:disable-next-line:variable-name
-  constructor(private _userService: UsersService) {}
+  constructor(private _userService: UsersService<any>) {}
 
   @Post()
   async create(@Body() usersCreateDto: UsersCreateDto) {
