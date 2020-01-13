@@ -28,7 +28,7 @@ export class UsersController {
   }
 
   @Put(':id')
-  async update(@Param('id') id: number, @Body() userCreateDto: UsersCreateDto) {
+  async update(@Param('id') id: string, @Body() userCreateDto: UsersCreateDto) {
       const result = await this._userService.update(id, userCreateDto);
       if (result == null) {
         throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
@@ -37,7 +37,7 @@ export class UsersController {
   }
 
   @Delete(':id')
-  async Delete(@Param('id') id: number) {
+  async Delete(@Param('id') id: string) {
     await this._userService.delete(id);
   }
 }

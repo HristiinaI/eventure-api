@@ -1,11 +1,9 @@
-import { InjectModel } from '@nestjs/mongoose';
-import { IUser } from '../schemas/users.schemas';
-import { Model, Mongoose } from 'mongoose';
+import { InjectModel} from '@nestjs/mongoose';
+import { Mongoose } from 'mongoose';
 import { UsersCreateDto } from './users-create.dto';
 import { Injectable } from '@nestjs/common';
 
 @Injectable()
-// tslint:disable-next-line:no-shadowed-variable
 export class UsersService<IUser extends Mongoose> {
     constructor(@InjectModel('User') private readonly userModel) {}
 
@@ -30,7 +28,7 @@ export class UsersService<IUser extends Mongoose> {
         }
     }
 
-    async update(id: number, usersCreateDto: UsersCreateDto): Promise<IUser> {
+    async update(id: string, usersCreateDto: UsersCreateDto): Promise<IUser> {
         try {
             return await this.userModel.findByIdAndUpdate(id, usersCreateDto, {new: true}).exec();
         } catch (Exception) {
@@ -38,7 +36,7 @@ export class UsersService<IUser extends Mongoose> {
         }
     }
 
-    async delete(id: number): Promise<IUser> {
+    async delete(id: string): Promise<IUser> {
         return await this.userModel.findByIdAndDelete(id).exec();
     }
 

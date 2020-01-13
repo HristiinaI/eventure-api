@@ -2,16 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
 
 import { MongooseModule } from '@nestjs/mongoose';
-import { UsersService } from './users/users.service';
-import { AuthModule } from './auth/auth.module';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
     UsersModule,
-    AuthModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
+    OrganizationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
