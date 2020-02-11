@@ -10,7 +10,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
 @Module({
   imports: [
     UsersModule,
-    MongooseModule.forRoot('mongodb://localhost/nest'),
+    MongooseModule.forRoot('mongodb://localhost/nest', {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology: true }),
     OrganizationsModule,
   ],
   controllers: [AppController],

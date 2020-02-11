@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import { IUser } from './users.schemas';
 
 export const OrganizationSchema = new mongoose.Schema({
   users: [{
@@ -11,9 +10,15 @@ export const OrganizationSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+
+  about: {
+    type: String,
+    required: true,
+  },
 });
 
 export interface IOrganization extends mongoose.Document {
   users: [];
   password: string;
+  about: string;
 }

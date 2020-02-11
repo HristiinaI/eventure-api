@@ -41,7 +41,12 @@ export class UsersService<IUser extends Mongoose> {
     }
 
     async findOne(usersCreateDto: UsersCreateDto): Promise<IUser> {
-        const { username } = usersCreateDto;
-        return await this.userModel.find({ username }).exec();
+        const { email } = usersCreateDto;
+        return await this.userModel.find({ email }).exec();
+    }
+
+    async doesUserExists(usersCreateDto: UsersCreateDto): Promise<boolean> {
+        const user = await this.userModel.findOne({ email: usersCreateDto.email });
+        return user.length !== 0;
     }
 }

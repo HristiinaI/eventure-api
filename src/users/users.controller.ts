@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Res } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersCreateDto} from './users-create.dto';
 
@@ -8,9 +8,9 @@ export class UsersController {
   constructor(private _userService: UsersService<any>) {}
 
   @Post()
-  async create(@Body() usersCreateDto: UsersCreateDto) {
-    const result = await this._userService.create(usersCreateDto);
-    return {ok: true, result};
+  async create(@Res() res, @Body() usersCreateDto: UsersCreateDto) {
+    const user = await this._userService.create(usersCreateDto);
+    return {ok: true, user};
   }
 
   @Get()
