@@ -1,4 +1,4 @@
 export class EventCreateDto {
   name: string;
-  type: boolean;
+  type: string;
 }
