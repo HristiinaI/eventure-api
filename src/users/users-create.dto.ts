@@ -13,15 +13,13 @@ export class UsersCreateDto {
     @IsNotEmpty()
     lastName: string;
     
-    @IsNotEmpty()
     type: string;
     
-    city: string;
+    country: string;
     
     education: string;
     
     workplace: string;
 
-    interests: string;
-
+    about: string;
 }

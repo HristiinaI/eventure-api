@@ -1,10 +1,8 @@
-import { IsNotEmpty } from 'class-validator';
-
 export class OrganizationDto {
-  @IsNotEmpty()
-  users: [];
+  members: [];
 
-  @IsNotEmpty()
+  name: string;
+
   password: string;
 
   about: string;

@@ -4,7 +4,6 @@ import { OrganizationDto } from './organization.dto';
 
 @Controller('organizations')
 export class OrganizationsController {
-  // tslint:disable-next-line:variable-name
   constructor(private _organizationService: OrganizationsService<any>) {}
 
   @Post()
@@ -35,7 +34,7 @@ export class OrganizationsController {
     }
     return result;
   }
-
+  
   @Delete(':id')
   async Delete(@Param('id') id: string) {
     await this._organizationService.delete(id);

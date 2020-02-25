@@ -1,10 +1,14 @@
 import * as mongoose from 'mongoose';
 
 export const OrganizationSchema = new mongoose.Schema({
-  users: [{
+  members: [{
     type: String,
     required: true,
   }],
+
+  name: {
+    type: String,
+  },
 
   password: {
     type: String,
@@ -18,7 +22,8 @@ export const OrganizationSchema = new mongoose.Schema({
 });
 
 export interface IOrganization extends mongoose.Document {
-  users: [];
+  members: [];
+  name: string;
   password: string;
   about: string;
 }

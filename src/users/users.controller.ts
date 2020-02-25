@@ -4,8 +4,7 @@ import { UsersCreateDto} from './users-create.dto';
 
 @Controller('users')
 export class UsersController {
-  // tslint:disable-next-line:variable-name
-  constructor(private _userService: UsersService<any>) {}
+  constructor(private _userService: UsersService) {}
 
   @Post()
   async create(@Res() res, @Body() usersCreateDto: UsersCreateDto) {
@@ -18,13 +17,22 @@ export class UsersController {
       return await this._userService.findAll();
   }
 
-  @Get(':id')
+  /*@Get(':id')
   async findUserById(@Param('id') id: string) {
       const result = await this._userService.findUserById(id);
       if (result == null) {
         throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
       }
       return result;
+  }*/
+
+  @Get(':email')
+  async findUserById(@Param() params) {
+    const result = await this._userService.findByEmail(params.email);
+    if(result == null) {
+      throw new HttpException('No user found with such email!', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @Put(':id')
@@ -34,6 +42,15 @@ export class UsersController {
         throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
       }
       return result;
+  }
+
+  @Put(':email')
+  async updateByEmail(@Param('email') email: string, @Body() usersCreateDto: UsersCreateDto) {
+    const result = await this._userService.updateByEmail(email, usersCreateDto);
+    if(result == null) {
+      throw new HttpException('Update by email not successful!', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @Delete(':id')

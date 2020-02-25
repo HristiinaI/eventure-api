@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { Document } from 'mongoose';
 import { Strategy } from 'passport-local';
 
 export const UserSchema = new mongoose.Schema({
@@ -10,7 +11,6 @@ export const UserSchema = new mongoose.Schema({
 
     password: {
         type: String,
-        required: true,
     },
 
     firstName: {
@@ -25,10 +25,9 @@ export const UserSchema = new mongoose.Schema({
 
     type: {
         type: String,
-        required: true,
     },
 
-    city: {
+    country: {
         type: String,
     },
 
@@ -40,19 +39,19 @@ export const UserSchema = new mongoose.Schema({
         type: String,
     },
 
-    interests: {
+    about: {
         type: String,
     },
 });
 
-export interface IUser extends mongoose.Document {
+export interface IUser extends Document {
     email: string;
     password: string;
     firstName: string;
     lastName: string;
     type: string;
-    city: string;
+    country: string;
     education: string;
     workplace: string;
-    interests: string;
+    about: string;
 }

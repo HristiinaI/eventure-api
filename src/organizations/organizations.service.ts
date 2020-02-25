@@ -3,6 +3,7 @@ import { Mongoose } from 'mongoose';
 import { OrganizationDto } from './organization.dto';
 import { Injectable } from '@nestjs/common';
 
+
 @Injectable()
 export class OrganizationsService<IOrganization extends Mongoose> {
   constructor(@InjectModel('Organization') private readonly organizationModel) {}
