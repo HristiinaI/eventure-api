@@ -1,19 +1,14 @@
 import { InjectModel} from '@nestjs/mongoose';
-import { Mongoose } from 'mongoose';
 import { UsersCreateDto } from './users-create.dto';
-import { Injectable } from '@nestjs/common';
-import { EXDEV } from 'constants';
+import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { IUser } from '../schemas/users.schemas';
+import * as bcrypt from 'bcryptjs';
+
 
 @Injectable()
 export class UsersService {
     constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
-
-    async create(usersCreateDto: UsersCreateDto): Promise<IUser> {
-        const create = new this.userModel(usersCreateDto);
-        return await create.save();
-    }
 
     async findAll(): Promise<IUser[]> {
         try {
@@ -21,6 +16,17 @@ export class UsersService {
         } catch (Exception) {
             return null;
         }
+    }
+
+    async findByParam(id: string, email: string, firstName: string): Promise<IUser> {
+        var result = await this.userModel.findById(id).exec();
+        if(result == null) {
+            result = await this.userModel.findOne({ email: email }).exec();
+            if(result == null) {
+                result = await this.userModel.findOne({ firstName }).exec();
+            }
+        }
+        return result;
     }
 
     async findByEmail(email: string): Promise<IUser> {
@@ -38,6 +44,39 @@ export class UsersService {
             return null;
         }
     }
+
+    async findByName(firstName: string): Promise<IUser> {
+        try {
+            return await this.userModel.findOne({ firstName: firstName }).exec();
+        } catch(Exception) {
+            return null;
+        }
+    }
+
+    async create(usersCreateDto: UsersCreateDto): Promise<IUser> {
+        //const create = new this.userModel(usersCreateDto);
+        //return await create.save();
+        if(this.isValidEmail(usersCreateDto.email) && usersCreateDto.password){
+            var isUserReg = await this.findByEmail(usersCreateDto.email);
+            if(!isUserReg) {
+                usersCreateDto.password = await bcrypt.hash(usersCreateDto.password, 10);
+                var registeredUser = new this.userModel(usersCreateDto);
+                registeredUser.role = "User";
+                return await registeredUser.save();
+            } else {
+                throw new HttpException('REGISTRATION.USER_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
+            } 
+        } else {
+            throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
+        }
+    }
+
+    isValidEmail (email : string){
+        if(email){
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        } else return false
+      }
 
     async update(id: string, usersCreateDto: UsersCreateDto): Promise<IUser> {
         try {
@@ -64,8 +103,6 @@ export class UsersService {
             return await this.findByEmail(email);
         } catch(Exception) {
             return null;
-        }
-        
-        
+        }    
     }
 }

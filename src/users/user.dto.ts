@@ -9,6 +9,7 @@ export class UserDto {
         this.education = object.education;
         this.workplace = object.workplace;
         this.about = object.about;
+        this.organizations = object.organizations;
     }
 
     readonly email: string;
@@ -20,5 +21,6 @@ export class UserDto {
     readonly education: string;
     readonly workplace: string;
     readonly about: string;
+    readonly organizations: [];
 
 }

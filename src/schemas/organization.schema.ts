@@ -8,6 +8,7 @@ export const OrganizationSchema = new mongoose.Schema({
 
   name: {
     type: String,
+    required: String,
   },
 
   password: {
@@ -17,8 +18,10 @@ export const OrganizationSchema = new mongoose.Schema({
 
   about: {
     type: String,
-    required: true,
   },
+  role: {
+    type: String,
+  }
 });
 
 export interface IOrganization extends mongoose.Document {
@@ -26,4 +29,5 @@ export interface IOrganization extends mongoose.Document {
   name: string;
   password: string;
   about: string;
+  role: string;
 }

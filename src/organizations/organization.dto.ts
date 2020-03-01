@@ -6,4 +6,6 @@ export class OrganizationDto {
   password: string;
 
   about: string;
+
+  role: string;
 }

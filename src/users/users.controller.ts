@@ -6,8 +6,9 @@ import { UsersCreateDto} from './users-create.dto';
 export class UsersController {
   constructor(private _userService: UsersService) {}
 
+  
   @Post()
-  async create(@Res() res, @Body() usersCreateDto: UsersCreateDto) {
+  async create(@Body() usersCreateDto: UsersCreateDto) {
     const user = await this._userService.create(usersCreateDto);
     return {ok: true, user};
   }
@@ -21,16 +22,27 @@ export class UsersController {
   async findUserById(@Param('id') id: string) {
       const result = await this._userService.findUserById(id);
       if (result == null) {
-        throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
+        throw new HttpException('No user found with such id!', HttpStatus.NOT_FOUND);
       }
       return result;
-  }*/
+  }
+*/
 
   @Get(':email')
-  async findUserById(@Param() params) {
-    const result = await this._userService.findByEmail(params.email);
+  async findOne(@Param("email") email: string, @Param("_id") id: string, @Param("firstName") firstName: string) {
+    const result = await this._userService.findByParam(id, email, firstName);
     if(result == null) {
-      throw new HttpException('No user found with such email!', HttpStatus.NOT_FOUND);
+      //return await this.find(params);
+      throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
+    }
+    return result;
+  }
+  
+  @Get(':firstName')
+   async find(@Param() params) {
+    const result = await this._userService.findByParam(params.id, params.email, params.firstName);
+    if(result == null) {
+      throw new HttpException('No user found with such name!', HttpStatus.NOT_FOUND);
     }
     return result;
   }

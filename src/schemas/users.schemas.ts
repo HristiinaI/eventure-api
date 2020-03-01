@@ -5,8 +5,7 @@ import { Strategy } from 'passport-local';
 export const UserSchema = new mongoose.Schema({
     email: {
         type: String,
-        required: true,
-        unique: true,
+        
     },
 
     password: {
@@ -15,12 +14,12 @@ export const UserSchema = new mongoose.Schema({
 
     firstName: {
         type: String,
-        required: true,
+        
     },
 
     lastName: {
         type: String,
-        required: true,
+        
     },
 
     type: {
@@ -42,6 +41,21 @@ export const UserSchema = new mongoose.Schema({
     about: {
         type: String,
     },
+
+    organizations: [],
+
+    name: {
+        type: String,
+    },
+
+    role: String,
+
+    auth: {
+        email: {
+            valid: { type: Boolean, default: false }
+        }
+    }
+
 });
 
 export interface IUser extends Document {
@@ -54,4 +68,12 @@ export interface IUser extends Document {
     education: string;
     workplace: string;
     about: string;
+    organizations: [];
+    name: string;
+    role: string;
+    auth: {
+        email: {
+            valid: boolean,
+        }
+    }
 }
