@@ -8,8 +8,11 @@ export const EventSchema = new mongoose.Schema({
   type: { 
     type: String,
     required: true,
-  }
-    date: { type: Date, default: Date.now },
+  },
+    date: { 
+      type: Date,
+      default: Date.now 
+    },
 
 });
 
@@ -17,4 +20,5 @@ export interface IEvent extends mongoose.Document {
   name: string;
   type: string;
   
+
 }
