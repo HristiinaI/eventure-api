@@ -5,6 +5,7 @@ import {EventCreateDto} from './dto/event-create.dto';
 @Controller('events')
 export class EventsController {
   
+  // tslint:disable-next-line:variable-name
   constructor(private _eventService: EventsService) {}
 
   @Post()
