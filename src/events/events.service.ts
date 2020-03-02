@@ -13,7 +13,7 @@ export class EventsService {
     return createdEvent.save();
   }
 
-  async findAll(): Promise<Event> {
+  async findAll(): Promise<IEvent[]> {
     return await this.eventModel.find().exec();
   }
 

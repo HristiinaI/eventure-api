@@ -1,17 +1,21 @@
+import { EventsModule } from './events/events.module';
+
 import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
-import { EventsController } from './events/events.controller';
-import { EventsService } from './events/events.service';
-import { EventsModule } from './events/events.module';
+import { UsersModule } from './users/users.module';
+import { ConfigModule } from '@nestjs/config';
+
 import { MongooseModule } from '@nestjs/mongoose';
-import {ConfigModule} from '@nestjs/config';
+import { OrganizationsModule } from './organizations/organizations.module';
 
 @Module({
   imports: [
+    UsersModule,
     EventsModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
+    OrganizationsModule,
   ],
   controllers: [AppController],
   providers: [AppService],
