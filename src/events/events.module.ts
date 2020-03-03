@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { MongooseModule } from '@nestjs/mongoose';
 import { EventsController } from './events.controller';
 import { EventsService } from './events.service';
-import { EventSchema } from '../shemas/event.shema';
+import { EventSchema } from '../schemas/event.shema';
 
 @Module({
   imports: [MongooseModule.forFeature([{ name: 'Event', schema: EventSchema }])],

@@ -2,7 +2,7 @@ export class EventCreateDto {
   name: string;
   type: string;
   // creator: string;
-  // location: string;
+  location: string;
   // about: string;
   // startDate: string;
   // endDate: string;

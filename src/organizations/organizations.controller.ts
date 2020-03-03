@@ -4,6 +4,7 @@ import { OrganizationDto } from './organization.dto';
 
 @Controller('organizations')
 export class OrganizationsController {
+  // tslint:disable-next-line:variable-name
   constructor(private _organizationService: OrganizationsService) {}
 
   @Post()
