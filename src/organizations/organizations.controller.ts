@@ -1,4 +1,4 @@
-import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete } from '@nestjs/common';
+import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Query } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
 import { OrganizationDto } from './organization.dto';
 
@@ -13,14 +13,23 @@ export class OrganizationsController {
     return {ok: true, result};
   }
 
-  @Get()
-  async findAll() {
-    return await this._organizationService.findAll();
+  @Get(':id')
+  async findById(@Param() params) {
+    const result = this._organizationService.findOrgById(params.id);
+    if (result == null) {
+      throw new HttpException('No organization found with such id!', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
-  @Get(':name')
-  async findOrganizationById(@Param() params) {
-    const result = await this._organizationService.findByName(params.name);
+  @Get()
+  async findByParam(@Query('name') name: string) {
+    let result = null;
+    if(name) {
+      result = await this._organizationService.findByParam(name);
+    } else {
+      result = this._organizationService.findAll();
+    }
     if (result == null) {
       throw new HttpException('No organization found!', HttpStatus.NOT_FOUND);
     }
@@ -35,26 +44,6 @@ export class OrganizationsController {
     }
     return result;
   }
-  
-  /*@Put('name')
-  async updateByEmail(@Param('name') name: string, @Body() organizationDto:OrganizationDto) {
-    const result = await this._organizationService.updateByName(name, organizationDto);
-    if(result == null) {
-      throw new HttpException('Update by name not successful!', HttpStatus.NOT_FOUND);
-    }
-    return result;
-  }*/
-
-  /*
-    @Put(':email')
-  async updateByEmail(@Param('email') email: string, @Body() usersCreateDto: UsersCreateDto) {
-    const result = await this._userService.updateByEmail(email, usersCreateDto);
-    if(result == null) {
-      throw new HttpException('Update by email not successful!', HttpStatus.NOT_FOUND);
-    }
-    return result;
-  } 
-  */
 
   @Delete(':id')
   async Delete(@Param('id') id: string) {
