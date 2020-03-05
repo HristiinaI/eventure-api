@@ -49,16 +49,6 @@ export class UsersController {
       return result;
   }
 
-  @Put(':email')
-  async updateByEmail(@Param('email') email: string, @Body() usersCreateDto: UsersCreateDto) {
-    const result = await this._userService.updateByEmail(email, usersCreateDto);
-    if (result != null) {
-      return result;
-    } else {
-      throw new HttpException('Update by email not successful!', HttpStatus.NOT_FOUND);
-    }
-  }
-
   @Delete(':id')
   async Delete(@Param('id') id: string) {
     await this._userService.delete(id);

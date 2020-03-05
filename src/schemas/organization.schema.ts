@@ -3,17 +3,14 @@ import * as mongoose from 'mongoose';
 export const OrganizationSchema = new mongoose.Schema({
   members: [{
     type: String,
-    required: true,
   }],
 
   name: {
     type: String,
-    required: String,
   },
 
   password: {
     type: String,
-    required: true,
   },
 
   about: {
@@ -25,7 +22,7 @@ export const OrganizationSchema = new mongoose.Schema({
 });
 
 export interface IOrganization extends mongoose.Document {
-  members: [];
+  members: String[];
   name: string;
   password: string;
   about: string;

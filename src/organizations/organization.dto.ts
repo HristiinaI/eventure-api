@@ -1,5 +1,5 @@
 export class OrganizationDto {
-  members: [];
+  members: String[];
 
   name: string;
 
