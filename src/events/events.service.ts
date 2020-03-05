@@ -23,11 +23,8 @@ export class EventsService {
     return await this.eventModel.findById(id).exec();
   }
 
-  async findByParam(id: string, name: string): Promise<IEvent> {
-    let result = await this.eventModel.findById(id).exec();
-    if (result == null) {
-      result = await this.eventModel.findOne({ name }).exec();
-    }
+  async findByParam(name: string): Promise<IEvent> {
+    const result = await this.eventModel.findOne({ name }).exec();
     return result;
   }
 

@@ -79,7 +79,7 @@ export class UsersService {
             return null;
         }
     }
-    
+
     async delete(id: string): Promise<IUser> {
         return await this.userModel.findByIdAndDelete(id).exec();
     }
