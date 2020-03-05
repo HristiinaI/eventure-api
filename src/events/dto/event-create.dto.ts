@@ -8,5 +8,5 @@ export class EventCreateDto {
   // endDate: string;
   // image: string;
   date: Date;
-  // members: [String];
+  members: string[];
 }

@@ -11,19 +11,19 @@ export class OrganizationsService {
 
   async create(organizationDto: OrganizationDto): Promise<IOrganization> {
     if(organizationDto.password) {
-        var isOrgReg = await this.findByName(organizationDto.name);
-        if(!isOrgReg) {
-            organizationDto.password = await bcrypt.hash(organizationDto.password, 10);
-            var registeredOrg = new this.organizationModel(organizationDto);
-            registeredOrg.role = "Organization";
-            return await registeredOrg.save();
-        } else {
-            throw new HttpException('REGISTRATION.USER_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
-        } 
+      var isOrgReg = await this.findByName(organizationDto.name);
+      if(!isOrgReg) {
+        organizationDto.password = await bcrypt.hash(organizationDto.password, 10);
+        var registeredOrg = new this.organizationModel(organizationDto);
+        registeredOrg.role = "Organization";
+        return await registeredOrg.save();
+      } else {
+        throw new HttpException('REGISTRATION.USER_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
+      }
     } else {
-        throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
+      throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
     }
-}
+  }
 
   async findAll(): Promise<IOrganization[]> {
     try {
@@ -43,11 +43,11 @@ export class OrganizationsService {
 
   async findByName(name: string): Promise<IOrganization> {
     try{
-        return await this.organizationModel.findOne({name: name}).exec();       
+      return await this.organizationModel.findOne({name: name}).exec();
     } catch (Exception) {
-        return null;
+      return null;
     }
-}
+  }
 
   async update(id: string, organizationDto: OrganizationDto): Promise<IOrganization> {
     try {

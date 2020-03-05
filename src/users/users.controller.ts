@@ -6,7 +6,7 @@ import { UsersCreateDto} from './users-create.dto';
 export class UsersController {
   constructor(private _userService: UsersService) {}
 
-  
+
   @Post()
   async create(@Body() usersCreateDto: UsersCreateDto) {
     const user = await this._userService.create(usersCreateDto);
@@ -15,7 +15,7 @@ export class UsersController {
 
   @Get()
   async findAll() {
-      return await this._userService.findAll();
+    return await this._userService.findAll();
   }
 
   /*@Get(':id')
@@ -37,9 +37,9 @@ export class UsersController {
     }
     return result;
   }
-  
+
   @Get(':firstName')
-   async find(@Param() params) {
+  async find(@Param() params) {
     const result = await this._userService.findByParam(params.id, params.email, params.firstName);
     if(result == null) {
       throw new HttpException('No user found with such name!', HttpStatus.NOT_FOUND);
@@ -49,11 +49,11 @@ export class UsersController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() userCreateDto: UsersCreateDto) {
-      const result = await this._userService.update(id, userCreateDto);
-      if (result == null) {
-        throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
-      }
-      return result;
+    const result = await this._userService.update(id, userCreateDto);
+    if (result == null) {
+      throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @Put(':email')

@@ -17,6 +17,9 @@ export const EventSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
+  members: {
+    type: [],
+  },
 
 });
 
@@ -25,4 +28,5 @@ export interface IEvent extends mongoose.Document {
   type: string;
   date: Date;
   location: string;
+  members: string[];
 }
