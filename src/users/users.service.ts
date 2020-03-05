@@ -2,10 +2,6 @@ import { InjectModel} from '@nestjs/mongoose';
 import { UsersCreateDto } from './users-create.dto';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { InjectModel} from '@nestjs/mongoose';
-import { UsersCreateDto } from './users-create.dto';
-import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
-import { Model } from 'mongoose';
 import { IUser } from '../schemas/users.schemas';
 import * as bcrypt from 'bcryptjs';
 
