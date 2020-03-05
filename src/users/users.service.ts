@@ -5,7 +5,6 @@ import { Model } from 'mongoose';
 import { IUser } from '../schemas/users.schemas';
 import * as bcrypt from 'bcryptjs';
 
-
 @Injectable()
 export class UsersService {
     constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
@@ -18,20 +17,17 @@ export class UsersService {
         }
     }
 
-    async findByParam(id: string, email: string, firstName: string): Promise<IUser> {
-        var result = await this.userModel.findById(id).exec();
-        if(result == null) {
-            result = await this.userModel.findOne({ email: email }).exec();
-            if(result == null) {
-                result = await this.userModel.findOne({ firstName }).exec();
-            }
+    async findByParam(email: string, firstName: string): Promise<IUser> {
+        let result = await this.userModel.findOne({ email }).exec();
+        if (result == null) {
+            result = await this.userModel.findOne({ firstName }).exec();
         }
         return result;
     }
 
     async findByEmail(email: string): Promise<IUser> {
-        try{
-            return await this.userModel.findOne({email: email}).exec();       
+        try {
+            return await this.userModel.findOne({email}).exec();
         } catch (Exception) {
             return null;
         }
@@ -47,21 +43,19 @@ export class UsersService {
 
     async findByName(firstName: string): Promise<IUser> {
         try {
-            return await this.userModel.findOne({ firstName: firstName }).exec();
+            return await this.userModel.findOne({ firstName }).exec();
         } catch(Exception) {
             return null;
         }
     }
 
     async create(usersCreateDto: UsersCreateDto): Promise<IUser> {
-        //const create = new this.userModel(usersCreateDto);
-        //return await create.save();
-        if(this.isValidEmail(usersCreateDto.email) && usersCreateDto.password){
-            var isUserReg = await this.findByEmail(usersCreateDto.email);
-            if(!isUserReg) {
+        if (this.isValidEmail(usersCreateDto.email) && usersCreateDto.password){
+            const isUserReg = await this.findByEmail(usersCreateDto.email);
+            if (!isUserReg) {
                 usersCreateDto.password = await bcrypt.hash(usersCreateDto.password, 10);
-                var registeredUser = new this.userModel(usersCreateDto);
-                registeredUser.role = "User";
+                let registeredUser = new this.userModel(usersCreateDto);
+                registeredUser.role = 'User';
                 return await registeredUser.save();
             } else {
                 throw new HttpException('REGISTRATION.USER_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
@@ -96,13 +90,5 @@ export class UsersService {
 
     async delete(id: string): Promise<IUser> {
         return await this.userModel.findByIdAndDelete(id).exec();
-    }
-
-    async doesUserExist(email: string): Promise<IUser> {
-        try {
-            return await this.findByEmail(email);
-        } catch(Exception) {
-            return null;
-        }    
     }
 }

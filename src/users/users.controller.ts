@@ -1,24 +1,19 @@
-import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Res } from '@nestjs/common';
+import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Query } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersCreateDto} from './users-create.dto';
 
 @Controller('users')
 export class UsersController {
+  // tslint:disable-next-line:variable-name
   constructor(private _userService: UsersService) {}
 
-  
   @Post()
   async create(@Body() usersCreateDto: UsersCreateDto) {
     const user = await this._userService.create(usersCreateDto);
     return {ok: true, user};
   }
 
-  @Get()
-  async findAll() {
-      return await this._userService.findAll();
-  }
-
-  /*@Get(':id')
+  @Get(':id')
   async findUserById(@Param('id') id: string) {
       const result = await this._userService.findUserById(id);
       if (result == null) {
@@ -26,24 +21,22 @@ export class UsersController {
       }
       return result;
   }
-*/
 
-  @Get(':email')
-  async findOne(@Param("email") email: string, @Param("_id") id: string, @Param("firstName") firstName: string) {
-    const result = await this._userService.findByParam(id, email, firstName);
-    if(result == null) {
-      //return await this.find(params);
+  @Get()
+  async find(@Query('email') email: string, @Query('firstName') firstName: string) {
+    let result = null;
+    if(email) {
+      result = await this._userService.findByEmail(email);
+    } else if(firstName) {
+      result = await this._userService.findByName(firstName);
+    } else {
+      result = await this._userService.findAll();
+    }
+
+    if (result == null) {
       throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
     }
-    return result;
-  }
-  
-  @Get(':firstName')
-   async find(@Param() params) {
-    const result = await this._userService.findByParam(params.id, params.email, params.firstName);
-    if(result == null) {
-      throw new HttpException('No user found with such name!', HttpStatus.NOT_FOUND);
-    }
+
     return result;
   }
 
@@ -59,10 +52,11 @@ export class UsersController {
   @Put(':email')
   async updateByEmail(@Param('email') email: string, @Body() usersCreateDto: UsersCreateDto) {
     const result = await this._userService.updateByEmail(email, usersCreateDto);
-    if(result == null) {
+    if (result != null) {
+      return result;
+    } else {
       throw new HttpException('Update by email not successful!', HttpStatus.NOT_FOUND);
     }
-    return result;
   }
 
   @Delete(':id')

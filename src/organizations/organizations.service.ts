@@ -33,7 +33,11 @@ export class OrganizationsService {
     }
   }
 
-  async findOrganizationById(id: string): Promise<IOrganization> {
+  async findByParam(name: string): Promise<IOrganization> {
+    return await this.organizationModel.findOne({ name }).exec();  
+  }
+
+  async findOrgById(id: string): Promise<IOrganization> {
     try {
       return await this.organizationModel.findById(id).exec();
     } catch (Exception) {
@@ -47,7 +51,7 @@ export class OrganizationsService {
     } catch (Exception) {
         return null;
     }
-}
+  }
 
   async update(id: string, organizationDto: OrganizationDto): Promise<IOrganization> {
     try {
