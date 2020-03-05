@@ -80,14 +80,6 @@ export class UsersService {
         }
     }
 
-    async updateByEmail(email: string, usersCreateDto: UsersCreateDto): Promise<IUser> {
-        try{
-            return await this.userModel.findOneAndUpdate(email, usersCreateDto, {new: true}).exec();
-        } catch(Exception) {
-            return null;
-        }
-    }
-
     async delete(id: string): Promise<IUser> {
         return await this.userModel.findByIdAndDelete(id).exec();
     }
