@@ -17,25 +17,17 @@ export class UsersService {
         }
     }
 
-    async findByParam(email: string, firstName: string): Promise<IUser> {
-        let result = await this.userModel.findOne({ email }).exec();
-        if (result == null) {
-            result = await this.userModel.findOne({ firstName }).exec();
-        }
-        return result;
-    }
-
-    async findByEmail(email: string): Promise<IUser> {
+    async findUserById(id: string): Promise<IUser> {
         try {
-            return await this.userModel.findOne({email}).exec();
+            return await this.userModel.findById(id).exec();
         } catch (Exception) {
             return null;
         }
     }
 
-    async findUserById(id: string): Promise<IUser> {
+    async findByEmail(email: string): Promise<IUser> {
         try {
-            return await this.userModel.findById(id).exec();
+            return await this.userModel.findOne({email}).exec();
         } catch (Exception) {
             return null;
         }

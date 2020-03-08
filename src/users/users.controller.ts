@@ -22,35 +22,18 @@ export class UsersController {
       return result;
   }
 
-  /*@Get()
-  async find(@Query('email') email: string, @Query('firstName') firstName: string) {
-    let result = null;
-    if(email) {
-      result = await this._userService.findByEmail(email);
-    } else if(firstName) {
-      result = await this._userService.findByName(firstName);
-    } else {
-      result = await this._userService.findAll();
-    }
-
-    if (result == null) {
-      throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
-    }
-
-    return result;
-  }*/
-
   @Get()
   async find(@Query('param') param: string) {
     let result = null;
-    if(param.includes('@')) {
+    if(param) {
       result = await this._userService.findByEmail(param);
-    } else if(!param.includes('@')) {
-      result = await this._userService.findByName(param);
+      if(result == null) {
+        result = await this._userService.findByName(param);
+      }
     } else {
       result = await this._userService.findAll();
     }
-
+  
     if (result == null) {
       throw new HttpException('No user found!', HttpStatus.NOT_FOUND);
     }
