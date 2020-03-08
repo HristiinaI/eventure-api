@@ -17,7 +17,7 @@ export class UsersCreateDto {
 
     about: string;
 
-    organizations: [];
+    organizations: String[];
 
     name: string;
 

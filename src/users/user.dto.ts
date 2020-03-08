@@ -21,6 +21,6 @@ export class UserDto {
     readonly education: string;
     readonly workplace: string;
     readonly about: string;
-    readonly organizations: [];
+    readonly organizations: String[];
 
 }

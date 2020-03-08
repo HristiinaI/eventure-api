@@ -42,7 +42,10 @@ export const UserSchema = new mongoose.Schema({
         type: String,
     },
 
-    organizations: [],
+    organizations: [{
+        type: String,
+        }
+    ],
 
     name: {
         type: String,
@@ -68,7 +71,7 @@ export interface IUser extends Document {
     education: string;
     workplace: string;
     about: string;
-    organizations: [];
+    organizations: string[];
     name: string;
     role: string;
     auth: {
