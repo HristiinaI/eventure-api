@@ -9,4 +9,5 @@ export class EventCreateDto {
   // image: string;
   date: Date;
   members: string[];
+  creator: string;
 }

@@ -23,14 +23,22 @@ export class EventsService {
     return await this.eventModel.findById(id).exec();
   }
 
-  async findByParam(name: string): Promise<IEvent> {
-    const result = await this.eventModel.findOne({ name }).exec();
+  async findByParam(params: object): Promise<IEvent> {
+    const result = await this.eventModel.findOne(params).exec();  
     return result;
   }
 
   async findByName(name: string): Promise<IEvent> {
     try {
-      return await this.eventModel.findOne({ name }).exec();
+      return await this.eventModel.find({ name: new RegExp(name, "i")}).exec();
+    } catch (Exception) {
+      return null;
+    }
+  }
+
+  async findByCreator(creator: string): Promise<IEvent> {
+    try {
+      return await this.eventModel.find({ creator }).exec();
     } catch (Exception) {
       return null;
     }

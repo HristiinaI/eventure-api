@@ -1,7 +1,7 @@
 import { InjectModel} from '@nestjs/mongoose';
 import { OrganizationDto } from './organization.dto';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
-import { IOrganization } from 'src/schemas/organization.schema';
+import { IOrganization } from '../schemas/organization.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcryptjs';
 

@@ -24,12 +24,17 @@ export class EventsController {
   }
 
     @Get()
-    async find(@Query('name') name: string) {
+    async find(@Query('name') name: string, @Query('creator')creator: string) {
     let result = null;
     if (name) {
-        result = await this._eventService.findByParam(name);
+        result = await this._eventService.findByName(name);
+        
+      }else if(creator){
+        result = await this._eventService.findByCreator(creator);
+        
       } else {
         result = this._eventService.findAll();
+        
       }
     if (result == null) {
       throw new HttpException('No event found with such name!', HttpStatus.NOT_FOUND);
