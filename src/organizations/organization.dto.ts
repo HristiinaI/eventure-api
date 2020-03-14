@@ -8,4 +8,6 @@ export class OrganizationDto {
   about: string;
 
   role: string;
+
+  creator: string;
 }

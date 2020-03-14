@@ -5,25 +5,27 @@ import { Strategy } from 'passport-local';
 export const UserSchema = new mongoose.Schema({
     email: {
         type: String,
-        
+        required: true,
     },
 
     password: {
         type: String,
+        required: true,
     },
 
     firstName: {
         type: String,
-        
+        required: true,
     },
 
     lastName: {
         type: String,
-        
+        required: true,
     },
 
     type: {
         type: String,
+        required: true,
     },
 
     country: {
@@ -46,6 +48,10 @@ export const UserSchema = new mongoose.Schema({
         type: String,
         }
     ],
+
+    events: [{
+        type: String,
+    }],
 
     name: {
         type: String,
@@ -72,6 +78,7 @@ export interface IUser extends Document {
     workplace: string;
     about: string;
     organizations: string[];
+    events: string[];
     name: string;
     role: string;
     auth: {

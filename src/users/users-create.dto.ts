@@ -19,6 +19,8 @@ export class UsersCreateDto {
 
     organizations: String[];
 
+    events: String[];
+
     name: string;
 
     role: string;
