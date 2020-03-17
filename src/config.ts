@@ -3,4 +3,4 @@ export default {
         secretOrKey: 'secret',
         expiresIn: 36000000,
     },
-};
+}

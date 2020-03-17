@@ -1,13 +1,12 @@
 import { EventsModule } from './events/events.module';
 
 import { Module } from '@nestjs/common';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
 import { UsersModule } from './users/users.module';
 import { ConfigModule } from '@nestjs/config';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { AppGateway } from './app.gateway';
 
 @Module({
   imports: [
@@ -17,7 +16,7 @@ import { OrganizationsModule } from './organizations/organizations.module';
     ConfigModule.forRoot(),
     OrganizationsModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [],
+  providers: [AppGateway],
 })
 export class AppModule {}

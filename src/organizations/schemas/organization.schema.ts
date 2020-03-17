@@ -1,6 +1,6 @@
-import * as mongoose from 'mongoose';
+import { Schema } from 'mongoose';
 
-export const OrganizationSchema = new mongoose.Schema({
+export const OrganizationSchema = new Schema({
   members: [{
     type: String,
     required: true,
@@ -27,12 +27,3 @@ export const OrganizationSchema = new mongoose.Schema({
     type: String,
   }
 });
-
-export interface IOrganization extends mongoose.Document {
-  members: String[];
-  name: string;
-  password: string;
-  about: string;
-  role: string;
-  creator: string;
-}

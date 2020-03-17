@@ -1,8 +1,8 @@
 import { InjectModel} from '@nestjs/mongoose';
-import { UsersCreateDto } from './users-create.dto';
+import { UsersCreateDto } from './dto/users-create.dto';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
-import { IUser } from '../schemas/users.schemas';
+import { IUser } from './interfaces/user.interface';
 import * as bcrypt from 'bcryptjs';
 
 @Injectable()
@@ -31,6 +31,12 @@ export class UsersService {
         } catch (Exception) {
             return null;
         }
+    }
+
+    async findByEmailToken(email: string): Promise<IUser> {
+        let user = await this.userModel.findOne({email}).exec();
+        user = user.schema.methods.serialize(user);
+        return user;
     }
 
     async findByName(firstName: string): Promise<IUser> {

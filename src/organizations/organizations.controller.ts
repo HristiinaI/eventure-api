@@ -1,6 +1,6 @@
 import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Query } from '@nestjs/common';
 import { OrganizationsService } from './organizations.service';
-import { OrganizationDto } from './organization.dto';
+import { OrganizationDto } from './dto/organization.dto';
 
 @Controller('organizations')
 export class OrganizationsController {

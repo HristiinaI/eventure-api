@@ -3,8 +3,8 @@ import {InjectModel} from '@nestjs/mongoose';
 import {IEvent} from '../schemas/event.shema';
 import {Model} from 'mongoose';
 import { EventCreateDto } from './dto/event-create.dto';
-import { UsersCreateDto } from '../users/users-create.dto';
-import { IUser } from '../schemas/users.schemas';
+import { UsersCreateDto } from '../users/dto/users-create.dto';
+import { IUser } from '../users/interfaces/user.interface';
 
 @Injectable()
 export class EventsService {

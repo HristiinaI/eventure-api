@@ -1,8 +1,7 @@
-import * as mongoose from 'mongoose';
-import { Document } from 'mongoose';
+import { Schema }  from 'mongoose';
 import { Strategy } from 'passport-local';
 
-export const UserSchema = new mongoose.Schema({
+export const UserSchema = new Schema({
     email: {
         type: String,
         required: true,
@@ -66,24 +65,3 @@ export const UserSchema = new mongoose.Schema({
     }
 
 });
-
-export interface IUser extends Document {
-    email: string;
-    password: string;
-    firstName: string;
-    lastName: string;
-    type: string;
-    country: string;
-    education: string;
-    workplace: string;
-    about: string;
-    organizations: string[];
-    events: string[];
-    name: string;
-    role: string;
-    auth: {
-        email: {
-            valid: boolean,
-        }
-    }
-}
