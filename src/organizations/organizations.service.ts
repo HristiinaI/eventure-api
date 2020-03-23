@@ -9,43 +9,8 @@ import * as bcrypt from 'bcryptjs';
 @Injectable()
 export class OrganizationsService {
   constructor(@InjectModel('Organization') private readonly organizationModel: Model<IOrganization>,
-  @InjectModel('User') private readonly userModel: Model<IUser>) {}
-
-  async create(organizationDto: OrganizationDto): Promise<IOrganization> {
-    if(organizationDto.password && organizationDto.name) {
-      if(this.emailsAreValid(organizationDto.members)) {
-        var isOrgReg = await this.findByName(organizationDto.name);
-        if(!isOrgReg) {
-          organizationDto.password = await bcrypt.hash(organizationDto.password, 10);
-          var registeredOrg = new this.organizationModel(organizationDto);
-          registeredOrg.role = "Organization";
-          return await registeredOrg.save();
-        } else {
-          throw new HttpException('REGISTRATION.ORGANIZATION_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
-        }
-      } else {
-        throw new HttpException('REGISTER.THERE_MAY_BE_AN_INVALID_EMAIL_ADDRESS', HttpStatus.FORBIDDEN);
-      }
-    } else {
-      throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
-    }
-  }
-  
-  isValidEmail (email : string) {
-    if(email){
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
-    } else return false
-  }
-  
-  async emailsAreValid(emails: string[]): Promise<boolean> {
-    for(let i = 0; i < emails.length; i++) {
-      if(!this.isValidEmail(emails[i])) {
-        return false;
-      } 
-    }
-    return true;
-  }
+  @InjectModel('User') private readonly userModel: Model<IUser>)
+  {}
 
   async findAll(): Promise<IOrganization[]> {
     try {
@@ -55,11 +20,7 @@ export class OrganizationsService {
     }
   }
 
-  async findByParam(name: string): Promise<IOrganization> {
-    return await this.organizationModel.findOne({ name }).exec();  
-  }
-
-  async findOrgById(id: string): Promise<IOrganization> {
+  async findById(id: string): Promise<IOrganization> {
     try {
       return await this.organizationModel.findById(id).exec();
     } catch (Exception) {
@@ -75,6 +36,35 @@ export class OrganizationsService {
     }
   }
 
+  async create(organizationDto: OrganizationDto): Promise<IOrganization> {
+    if(organizationDto.password && organizationDto.name) {
+      if(this.emailsAreValid(organizationDto.members)) {
+        var isOrgReg = await this.findByName(organizationDto.name);
+        if(!isOrgReg) {
+          for(let i = 0; i < organizationDto.members.length; i++) {
+            var user = await this.userModel.findOne({email: organizationDto.members[i]}).exec();
+            organizationDto.members[i] = user._id;
+          }
+          var org = new this.organizationModel(organizationDto);
+          org.role = "Organization";
+          for(let i = 0; i < org.members.length; i++) {
+            var user = await this.userModel.findById(org.members[i]).exec();
+            await user.organizations.push(org._id);
+            await this.userModel.findByIdAndUpdate(user._id, {organizations: user.organizations}, {new: true}).exec();
+          }
+          return await org.save();
+        } else {
+          throw new HttpException('REGISTRATION.ORGANIZATION_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
+        }
+      } else {
+        throw new HttpException('REGISTER.THERE_MAY_BE_AN_INVALID_EMAIL_ADDRESS', HttpStatus.FORBIDDEN);
+      }
+    } else {
+      throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
+    }
+  }
+  
+
   async update(id: string, organizationDto: OrganizationDto): Promise<IOrganization> {
     try {
       return await this.organizationModel.findByIdAndUpdate(id, organizationDto, {new: true}).exec();
@@ -85,5 +75,21 @@ export class OrganizationsService {
 
   async delete(id: string): Promise<IOrganization> {
     return await this.organizationModel.findByIdAndDelete(id).exec();
+  }
+
+  isValidEmail (email : string) {
+    if(email){
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+    } else return false
+  }
+  
+  async emailsAreValid(emails: string[]): Promise<boolean> {
+    for(let i = 0; i < emails.length; i++) {
+      if(!this.isValidEmail(emails[i])) {
+        return false;
+      } 
+    }
+    return true;
   }
 }

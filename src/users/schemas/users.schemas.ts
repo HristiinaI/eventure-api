@@ -1,5 +1,4 @@
 import { Schema }  from 'mongoose';
-import { Strategy } from 'passport-local';
 
 export const UserSchema = new Schema({
     email: {
@@ -52,16 +51,11 @@ export const UserSchema = new Schema({
         type: String,
     }],
 
-    name: {
+    chats: [{
         type: String,
-    },
-
-    role: String,
-
-    auth: {
-        email: {
-            valid: { type: Boolean, default: false }
-        }
+    }],
+    
+    role: {
+        type: String,
     }
-
 });

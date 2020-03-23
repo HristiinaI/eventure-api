@@ -4,7 +4,6 @@ import { OrganizationDto } from './dto/organization.dto';
 
 @Controller('organizations')
 export class OrganizationsController {
-  // tslint:disable-next-line:variable-name
   constructor(private _organizationService: OrganizationsService) {}
 
   @Post()
@@ -15,7 +14,7 @@ export class OrganizationsController {
 
   @Get(':id')
   async findById(@Param() params) {
-    const result = this._organizationService.findOrgById(params.id);
+    const result = this._organizationService.findById(params.id);
     if (result == null) {
       throw new HttpException('No organization found with such id!', HttpStatus.NOT_FOUND);
     }
@@ -26,7 +25,7 @@ export class OrganizationsController {
   async findByParam(@Query('name') name: string) {
     let result = null;
     if(name) {
-      result = await this._organizationService.findByParam(name);
+      result = await this._organizationService.findByName(name);
     } else {
       result = this._organizationService.findAll();
     }

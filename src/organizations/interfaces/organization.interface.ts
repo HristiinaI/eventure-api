@@ -7,4 +7,6 @@ export interface IOrganization extends Document {
     about: string;
     role: string;
     creator: string;
-  }
+    events: String[];
+    chats: String[];
+}

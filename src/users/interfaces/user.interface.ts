@@ -10,13 +10,8 @@ export interface IUser extends Document {
     education: string;
     workplace: string;
     about: string;
-    organizations: string[];
-    events: string[];
-    name: string;
+    organizations: String[];
+    events: String[];
+    chats: String[];
     role: string;
-    auth: {
-        email: {
-            valid: boolean,
-        }
-    }
 }

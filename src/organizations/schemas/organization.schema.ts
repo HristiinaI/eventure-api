@@ -19,11 +19,20 @@ export const OrganizationSchema = new Schema({
   about: {
     type: String,
   },
+  
   role: {
     type: String,
   },
 
   creator: {
     type: String,
-  }
+  },
+
+  events: [{
+    type: String,
+  }],
+  
+  chats: [{
+    type: String,
+  }]
 });

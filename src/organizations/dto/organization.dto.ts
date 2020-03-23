@@ -10,4 +10,9 @@ export class OrganizationDto {
   role: string;
 
   creator: string;
+
+  events: string[];
+
+  chats: string[];
 }
+

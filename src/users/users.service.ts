@@ -3,11 +3,11 @@ import { UsersCreateDto } from './dto/users-create.dto';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { Model } from 'mongoose';
 import { IUser } from './interfaces/user.interface';
-import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class UsersService {
-    constructor(@InjectModel('User') private readonly userModel: Model<IUser>) {}
+    constructor(@InjectModel('User') private readonly userModel: Model<IUser>) 
+    {}
 
     async findAll(): Promise<IUser[]> {
         try {
@@ -17,7 +17,7 @@ export class UsersService {
         }
     }
 
-    async findUserById(id: string): Promise<IUser> {
+    async findById(id: string): Promise<IUser> {
         try {
             return await this.userModel.findById(id).exec();
         } catch (Exception) {
@@ -33,13 +33,7 @@ export class UsersService {
         }
     }
 
-    async findByEmailToken(email: string): Promise<IUser> {
-        let user = await this.userModel.findOne({email}).exec();
-        user = user.schema.methods.serialize(user);
-        return user;
-    }
-
-    async findByName(firstName: string): Promise<IUser> {
+    async findByFirstName(firstName: string): Promise<IUser> {
         try {
             return await this.userModel.findOne({ firstName }).exec();
         } catch(Exception) {
@@ -51,7 +45,6 @@ export class UsersService {
         if (this.isValidEmail(usersCreateDto.email) && usersCreateDto.password){
             const isUserReg = await this.findByEmail(usersCreateDto.email);
             if (!isUserReg) {
-                usersCreateDto.password = await bcrypt.hash(usersCreateDto.password, 10);
                 let registeredUser = new this.userModel(usersCreateDto);
                 registeredUser.role = 'User';
                 return await registeredUser.save();
@@ -63,13 +56,6 @@ export class UsersService {
         }
     }
 
-    isValidEmail (email : string){
-        if(email){
-          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-          return re.test(email);
-        } else return false
-    }
-
     async update(id: string, usersCreateDto: UsersCreateDto): Promise<IUser> {
         try {
             return await this.userModel.findByIdAndUpdate(id, usersCreateDto, {new: true}).exec();
@@ -79,6 +65,19 @@ export class UsersService {
     }
 
     async delete(id: string): Promise<IUser> {
+       try {
         return await this.userModel.findByIdAndDelete(id).exec();
+       } catch (Exception) {
+        return null;
+       }
+    }
+
+    isValidEmail (email : string){
+        if(email){
+          var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+          return re.test(email);
+        } else {
+            return false;
+        }
     }
 }

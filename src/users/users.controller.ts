@@ -1,10 +1,20 @@
-import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Query } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  HttpException, 
+  Param, 
+  HttpStatus, 
+  Post, 
+  Body, 
+  Put, 
+  Delete, 
+  Query 
+} from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersCreateDto} from './dto/users-create.dto';
 
 @Controller('users')
 export class UsersController {
-  // tslint:disable-next-line:variable-name
   constructor(private _userService: UsersService) {}
 
   @Post()
@@ -15,7 +25,7 @@ export class UsersController {
 
   @Get(':id')
   async findUserById(@Param('id') id: string) {
-      const result = await this._userService.findUserById(id);
+      const result = await this._userService.findById(id);
       if (result == null) {
         throw new HttpException('No user found with such id!', HttpStatus.NOT_FOUND);
       }
@@ -26,9 +36,12 @@ export class UsersController {
   async find(@Query('param') param: string) {
     let result = null;
     if(param) {
-      result = await this._userService.findByEmail(param);
+      result = await this._userService.findById(param);
       if(result == null) {
-        result = await this._userService.findByName(param);
+        result = await this._userService.findByEmail(param);
+        if(result == null) {
+          result = await this._userService.findByFirstName(param);
+        }
       }
     } else {
       result = await this._userService.findAll();
@@ -43,11 +56,11 @@ export class UsersController {
 
   @Put(':id')
   async update(@Param('id') id: string, @Body() userCreateDto: UsersCreateDto) {
-      const result = await this._userService.update(id, userCreateDto);
-      if (result == null) {
-        throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
-      }
-      return result;
+    const result = await this._userService.update(id, userCreateDto);
+    if (result == null) {
+      throw new HttpException('Update not successful!', HttpStatus.NOT_FOUND);
+    }
+    return result;
   }
 
   @Delete(':id')

@@ -17,11 +17,11 @@ export class UsersCreateDto {
 
     about: string;
 
-    organizations: String[];
+    organizations: string[];
 
-    events: String[];
+    events: string[];
 
-    name: string;
+    chats: string[];
 
     role: string;
 }

@@ -11,6 +11,7 @@ export class UserDto {
         this.about = object.about;
         this.organizations = object.organizations;
         this.events = object.events;
+        this.chats = object.chats;
     }
 
     readonly email: string;
@@ -24,5 +25,6 @@ export class UserDto {
     readonly about: string;
     readonly organizations: String[];
     readonly events: String[];
+    readonly chats: String[];
 
 }

@@ -6,17 +6,22 @@ import { ConfigModule } from '@nestjs/config';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from './organizations/organizations.module';
-import { AppGateway } from './app.gateway';
+
+import { MessageModule } from './message/message.module';
+import { ChatModule } from './chat/chat.module';
 
 @Module({
   imports: [
     UsersModule,
+    OrganizationsModule,
     EventsModule,
+    MessageModule,
+    ChatModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
-    OrganizationsModule,
   ],
   controllers: [],
-  providers: [AppGateway],
+  providers: [],
+  exports: [],
 })
 export class AppModule {}
