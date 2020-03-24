@@ -16,7 +16,6 @@ export const EventSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
   },
   members: {
     type: [],
@@ -24,6 +23,12 @@ export const EventSchema = new mongoose.Schema({
   creator: {
     type: String,
     required: true,
+  },
+  about: {
+    type: String,
+  },
+  board: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'Board', 
   }
 });
 
@@ -34,4 +39,5 @@ export interface IEvent extends mongoose.Document {
   location: string;
   members: string[];
   creator: string;
+  about: string;
 }

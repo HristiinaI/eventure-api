@@ -8,11 +8,15 @@ import { ConfigModule } from '@nestjs/config';
 
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from './organizations/organizations.module';
+import { BoardModule } from './board/board.module';
+import { ListsModule } from './list/lists.module';
 
 @Module({
   imports: [
     UsersModule,
     EventsModule,
+    BoardModule,
+    ListsModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
     OrganizationsModule,

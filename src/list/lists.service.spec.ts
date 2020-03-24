@@ -1,15 +1,15 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { KanbanService } from './kanban.service';
+import { ListsService } from './lists.service';
 
-describe('KanbanService', () => {
-  let service: KanbanService;
+describe('ListsService', () => {
+  let service: ListsService;
 
   beforeEach(async () => {
     const module: TestingModule = await Test.createTestingModule({
-      providers: [KanbanService],
+      providers: [ListsService],
     }).compile();
 
-    service = module.get<KanbanService>(KanbanService);
+    service = module.get<ListsService>(ListsService);
   });
 
   it('should be defined', () => {
