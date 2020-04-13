@@ -1,4 +1,15 @@
-import { Controller, Get, HttpException, Param, HttpStatus, Post, Body, Put, Delete, Query } from '@nestjs/common';
+import { 
+  Controller, 
+  Get, 
+  HttpException, 
+  Param, 
+  HttpStatus, 
+  Post, 
+  Body, 
+  Put, 
+  Delete, 
+  Query 
+} from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageDto } from './dto/message.dto';
 import { ChatService } from 'src/chat/chat.service';
@@ -30,9 +41,6 @@ export class MessageController {
     let result = null;
     if(param) {
       result = await this._messageService.findAllPerChatId(param);
-      if(result == null) {
-          result = await this._messageService.findBySender(param);
-      }
     } else {
       result = this._messageService.findAll();
     }

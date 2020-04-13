@@ -4,11 +4,11 @@ import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { IOrganization } from './interfaces/organization.interface';
 import { IUser } from '../users/interfaces/user.interface';
 import { Model } from 'mongoose';
-import * as bcrypt from 'bcryptjs';
 
 @Injectable()
 export class OrganizationsService {
-  constructor(@InjectModel('Organization') private readonly organizationModel: Model<IOrganization>,
+  constructor(@InjectModel('Organization') 
+  private readonly organizationModel: Model<IOrganization>,
   @InjectModel('User') private readonly userModel: Model<IUser>)
   {}
 
@@ -63,7 +63,6 @@ export class OrganizationsService {
       throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
     }
   }
-  
 
   async update(id: string, organizationDto: OrganizationDto): Promise<IOrganization> {
     try {
@@ -74,9 +73,13 @@ export class OrganizationsService {
   }
 
   async delete(id: string): Promise<IOrganization> {
-    return await this.organizationModel.findByIdAndDelete(id).exec();
+    try {
+      return await this.organizationModel.findByIdAndDelete(id).exec();
+    } catch (Exception) {
+      return null;
+    }
   }
-
+  
   isValidEmail (email : string) {
     if(email){
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;

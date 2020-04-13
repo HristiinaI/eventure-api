@@ -10,13 +10,18 @@ import { IOrganization } from 'src/organizations/interfaces/organization.interfa
 export class ChatService {
   constructor(@InjectModel('Chat') private readonly chatModel: Model<IChat>,
   @InjectModel('User') private readonly userModel: Model<IUser>,
-  @InjectModel('Organization') private readonly organizationModel: Model<IOrganization>) 
+  @InjectModel('Organization') 
+  private readonly organizationModel: Model<IOrganization>) 
   {}
 
   async findAll(): Promise<IChat[]> {
-    return await this.chatModel.find().exec();
+    try { 
+      return await this.chatModel.find().exec();
+    } catch (Exception) {
+      return null;
+    }
   }
-
+  
   async findById(id: string): Promise<IChat> {
     try {
       return await this.chatModel.findById(id).exec();
@@ -38,14 +43,18 @@ export class ChatService {
     for(let i = 0; i < chatDto.members.length; i++) {
       var user = null;
       if(chatDto.members[i].includes('@')) {
-        user = await this.userModel.findOne({email: chatDto.members[i]}).exec();
+        user = await this.userModel.
+        findOne({email: chatDto.members[i]}).exec();
         await user.chats.push(chat._id);
-        await this.userModel.findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
+        await this.userModel.
+        findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
         chat.members[i] = user._id;
       } else {
-        user = await this.organizationModel.findOne({name: chatDto.members[i]}).exec();
+        user = await this.organizationModel.
+        findOne({name: chatDto.members[i]}).exec();
         await user.chats.push(chat._id);
-        await this.organizationModel.findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
+        await this.organizationModel.
+        findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
         chat.members[i] = user._id;
       }
     }
@@ -69,7 +78,7 @@ export class ChatService {
       return null;
     }
   }
-
+    
   async delete(id: string): Promise<IChat> {
     return await this.chatModel.findByIdAndDelete(id).exec();
   }

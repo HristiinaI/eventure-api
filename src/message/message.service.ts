@@ -47,13 +47,11 @@ export class MessageService {
 
   async create(messageDto: MessageDto): Promise<IMessage> {
     var message = new this.messageModel(messageDto);
-
     if(await this.isOrg(messageDto) != null) {
         messageDto.isUser = false;
     } else if(await this.isUser(messageDto) != null) {
         messageDto.isUser = true;
     }
-    
     return await message.save();
   }
 
@@ -80,7 +78,7 @@ export class MessageService {
       return null;
     }
   }
-
+  
   async delete(id: string): Promise<IMessage> {
     return await this.messageModel.findByIdAndDelete(id).exec();
   }
