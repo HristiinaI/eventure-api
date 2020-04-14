@@ -3,14 +3,32 @@ import { OrganizationDto } from './dto/organization.dto';
 import { Injectable, HttpStatus, HttpException } from '@nestjs/common';
 import { IOrganization } from './interfaces/organization.interface';
 import { IUser } from '../users/interfaces/user.interface';
+import { IOrganization } from '../schemas/organization.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
 export class OrganizationsService {
-  constructor(@InjectModel('Organization') 
+  constructor(@InjectModel('Organization')
   private readonly organizationModel: Model<IOrganization>,
   @InjectModel('User') private readonly userModel: Model<IUser>)
   {}
+  constructor(@InjectModel('Organization') private readonly organizationModel: Model<IOrganization>) {}
+
+  async create(organizationDto: OrganizationDto): Promise<IOrganization> {
+    if(organizationDto.password) {
+      var isOrgReg = await this.findByName(organizationDto.name);
+      if(!isOrgReg) {
+        organizationDto.password = await bcrypt.hash(organizationDto.password, 10);
+        var registeredOrg = new this.organizationModel(organizationDto);
+        registeredOrg.role = "Organization";
+        return await registeredOrg.save();
+      } else {
+        throw new HttpException('REGISTRATION.USER_ALREADY_REGISTERED', HttpStatus.FORBIDDEN);
+      }
+    } else {
+      throw new HttpException('REGISTRATION.MISSING_MANDATORY_PARAMETERS', HttpStatus.FORBIDDEN);
+    }
+  }
 
   async findAll(): Promise<IOrganization[]> {
     try {
