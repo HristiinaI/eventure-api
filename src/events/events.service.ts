@@ -14,11 +14,11 @@ export class EventsService {
     return createdEvent.save();
   }
   async findAll(): Promise<IEvent[]> {
-    return await this.eventModel.find().exec();
+    return await this.eventModel.find().populate('Board').exec();
   }
 
   async findEventById(id: string): Promise<IEvent> {
-    return await this.eventModel.findById(id).exec();
+    return await this.eventModel.findById(id).populate('Board').exec();
   }
   async findByName(name: string): Promise<IEvent> {
     try {

@@ -21,7 +21,7 @@ export const EventSchema = new mongoose.Schema({
     type: [],
   },
   creator: {
-    type: String,
+    type: mongoose.SchemaTypes.ObjectId,
     required: true,
   },
   about: {
