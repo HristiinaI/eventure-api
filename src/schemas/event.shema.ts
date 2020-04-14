@@ -1,4 +1,5 @@
 import * as mongoose from 'mongoose';
+import { string } from 'prop-types';
 
 export const EventSchema = new mongoose.Schema({
   name: {
@@ -15,12 +16,20 @@ export const EventSchema = new mongoose.Schema({
   },
   location: {
     type: String,
-    required: true,
   },
   members: {
     type: [],
   },
-
+  creator: {
+    type: mongoose.SchemaTypes.ObjectId,
+    required: true,
+  },
+  about: {
+    type: String,
+  },
+  board: {
+    type: mongoose.Schema.Types.ObjectId, ref: 'Board', 
+  }
 });
 
 export interface IEvent extends mongoose.Document {
@@ -29,4 +38,6 @@ export interface IEvent extends mongoose.Document {
   date: Date;
   location: string;
   members: string[];
+  creator: string;
+  about: string;
 }
