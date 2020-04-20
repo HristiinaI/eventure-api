@@ -1,5 +1,4 @@
 import * as mongoose from 'mongoose';
-import { string } from 'prop-types';
 
 export const EventSchema = new mongoose.Schema({
   name: {

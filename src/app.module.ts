@@ -9,16 +9,18 @@ import { OrganizationsModule } from './organizations/organizations.module';
 import { BoardModule } from './board/board.module';
 import { ListsModule } from './list/lists.module';
 
-import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
+import { AuthModule } from './auth/auth.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
     UsersModule,
     OrganizationsModule,
     EventsModule,
-    MessageModule,
     ChatModule,
+    MessageModule,
+    AuthModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
   ],

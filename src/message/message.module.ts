@@ -10,16 +10,19 @@ import { OrganizationSchema } from 'src/organizations/schemas/organization.schem
 import { ChatModule } from 'src/chat/chat.module';
 import { ChatSchema } from 'src/chat/schemas/chat.schema';
 import { ChatService } from 'src/chat/chat.service';
+import { ChatGateway } from '../chat/chat.gateway';
+import { JwtService } from '../auth/jwt/jwt.service';
+import { UsersService } from '../users/users.service';
 
 @Module({
     imports: [MongooseModule.forFeature([
-        {name: 'Message', schema: MessageSchema}, 
+        {name: 'Message', schema: MessageSchema},
         {name: 'User', schema: UserSchema},
         {name: 'Organization', schema: OrganizationSchema},
-        {name: 'Chat', schema: ChatSchema}
+        {name: 'Chat', schema: ChatSchema},
       ])],
     controllers: [MessageController],
-    providers: [MessageService, ChatService, UsersModule, OrganizationsModule, ChatModule],
+    providers: [MessageService, ChatService, UsersModule, OrganizationsModule, ChatModule, JwtService, UsersService],
     exports: [MessageService, ChatService],
 })
 export class MessageModule {}

@@ -5,6 +5,7 @@ import { IChat } from './interfaces/chat.interface';
 import { ChatDto } from './dto/chat.dto';
 import { IUser } from 'src/users/interfaces/user.interface';
 import { IOrganization } from 'src/organizations/interfaces/organization.interface';
+import { MessageDto } from '../message/dto/message.dto';
 
 @Injectable()
 export class ChatService {
@@ -38,6 +39,18 @@ export class ChatService {
     } 
   }
 
+  async getMessages(id: string, limit: number) {
+    let chat = await this.chatModel.findWithLimit(id, limit);
+
+    // Create the user room, if isn't already exist
+    if (!chat) {
+      const userChat = new this.chatModel({ _id: id, name: id, is_user: true });
+      chat = await this.create(userChat);
+    }
+
+    return chat.messages;
+  }
+
   async create(chatDto: ChatDto): Promise<IChat> {
     const chat = new this.chatModel(chatDto); 
     for(let i = 0; i < chatDto.members.length; i++) {
@@ -69,9 +82,9 @@ export class ChatService {
     }
   }
 
-  async updateMessages(id: string, message: string): Promise<IChat> {
+  async updateMessages(id: string, messageDto: MessageDto): Promise<IChat> {
     var chat = await this.chatModel.findById(id);
-    await chat.messages.push(message);
+    await chat.messages.push(messageDto);
     try{
       return await this.chatModel.findByIdAndUpdate(id, {messages: chat.messages}, {new: true}).exec();
     } catch(Exception) {
