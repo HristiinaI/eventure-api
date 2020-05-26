@@ -10,19 +10,18 @@ import { MessageDto } from '../message/dto/message.dto';
 @Injectable()
 export class ChatService {
   constructor(@InjectModel('Chat') private readonly chatModel: Model<IChat>,
-  @InjectModel('User') private readonly userModel: Model<IUser>,
-  @InjectModel('Organization') 
-  private readonly organizationModel: Model<IOrganization>) 
-  {}
+              @InjectModel('User') private readonly userModel: Model<IUser>,
+              @InjectModel('Organization')
+  private readonly organizationModel: Model<IOrganization>) {}
 
   async findAll(): Promise<IChat[]> {
-    try { 
+    try {
       return await this.chatModel.find().exec();
     } catch (Exception) {
       return null;
     }
   }
-  
+
   async findById(id: string): Promise<IChat> {
     try {
       return await this.chatModel.findById(id).exec();
@@ -32,11 +31,11 @@ export class ChatService {
   }
 
   async findByName(name: string): Promise<IChat> {
-    try{
-      return await this.chatModel.findOne({name: name}).exec();
+    try {
+      return await this.chatModel.findOne({name}).exec();
     } catch (Exception) {
       return null;
-    } 
+    }
   }
 
   async getMessages(id: string, limit: number) {
@@ -51,11 +50,22 @@ export class ChatService {
     return chat.messages;
   }
 
+  async findAllMessages(id: string) {
+    const chat = await this.chatModel.findById(id).exec();
+    /*const messages = [];
+    for(let i = 0; i < chat.messages.length; i++) {
+      messages.push(chat.messages[i].message);
+    }
+
+    return new Array(messages);*/
+    return chat.messages;
+  }
+
   async create(chatDto: ChatDto): Promise<IChat> {
-    const chat = new this.chatModel(chatDto); 
-    for(let i = 0; i < chatDto.members.length; i++) {
-      var user = null;
-      if(chatDto.members[i].includes('@')) {
+    const chat = new this.chatModel(chatDto);
+    for (let i = 0; i < chatDto.members.length; i++) {
+      let user = null;
+      if (chatDto.members[i].includes('@')) {
         user = await this.userModel.
         findOne({email: chatDto.members[i]}).exec();
         await user.chats.push(chat._id);
@@ -83,15 +93,15 @@ export class ChatService {
   }
 
   async updateMessages(id: string, messageDto: MessageDto): Promise<IChat> {
-    var chat = await this.chatModel.findById(id);
+    const chat = await this.chatModel.findById(id);
     await chat.messages.push(messageDto);
-    try{
+    try {
       return await this.chatModel.findByIdAndUpdate(id, {messages: chat.messages}, {new: true}).exec();
-    } catch(Exception) {
+    } catch (Exception) {
       return null;
     }
   }
-    
+
   async delete(id: string): Promise<IChat> {
     return await this.chatModel.findByIdAndDelete(id).exec();
   }

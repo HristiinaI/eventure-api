@@ -30,8 +30,26 @@ export class JwtService {
   }
 
   async verify(token: string, isWs: boolean = false): Promise<IUser | null> {
-      const payload = jwt.verify(token, APP_CONFIG.jwtSecret) as any;
-      const user = await this.usersService.findById(payload.sub._id);
-      return user;
+      try {
+        const payload = jwt.verify(token, APP_CONFIG.jwtSecret) as any;
+        const user = await this.usersService.findById(payload.sub._id);
+        if (!user) {
+          if (isWs) {
+            throw new WsException('Unauthorized access');
+          } else {
+            throw new HttpException(
+              'Unauthorized access',
+              HttpStatus.BAD_REQUEST
+            );
+          }
+        }
+        return user;
+      } catch (err) {
+        if (isWs) {
+          throw new WsException(err.message);
+        } else {
+          throw new HttpException(err.message, HttpStatus.BAD_REQUEST);
+        }
+      }
   }
 }

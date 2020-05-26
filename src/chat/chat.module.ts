@@ -8,7 +8,6 @@ import { UsersModule } from 'src/users/users.module';
 import { OrganizationSchema } from 'src/organizations/schemas/organization.schema';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
 import { ChatGateway } from './chat.gateway';
-import { MessageModule } from '../message/message.module';
 import { JwtService } from '../auth/jwt/jwt.service';
 import { MessageService } from '../message/message.service';
 import { MessageSchema } from '../message/schemas/message.schema';

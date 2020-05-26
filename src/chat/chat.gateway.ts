@@ -16,10 +16,9 @@ import { MessageService } from '../message/message.service';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io';
 
-@WebSocketGateway(1080, { namespace: 'chats' })
+@WebSocketGateway(1080)
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer()
-  server;
+  @WebSocketServer() server;
   private logger: Logger = new Logger('ChatGateway');
 
   connectedUsers: string[] = [];
@@ -38,7 +37,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     this.connectedUsers = [...this.connectedUsers, String(user._id)];
 
-    // Send list of connected users
     this.server.emit('users', this.connectedUsers);
 
   }
@@ -57,7 +55,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       ];
     }
 
-    // Sends the new list of connected users
     this.server.emit('users', this.connectedUsers);
   }
 
@@ -66,7 +63,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     const event: string = 'message';
     const result = data;
 
-    // await this.messageService.create(data);
     await this.chatService.updateMessages(data.chatId, data);
     client.broadcast.to(result.chatId).emit(event, result.message);
 
@@ -79,9 +75,8 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   async onRoomJoin(client: Socket, data: MessageDto): Promise<any> {
     client.join(data.chatId);
 
-    const messages = await this.chatService.getMessages(data.chatId, 25);
+    const messages = await this.chatService.getMessages(data.chatId, 30);
 
-    // Send last messages to the connected user
     client.emit('message', messages);
   }
 

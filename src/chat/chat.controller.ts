@@ -37,7 +37,7 @@ export class ChatController {
   async findByParam(@Query('param') param: string) {
     let result = null;
     if(param) {
-       result = await this._chatService.findById(param); 
+       result = await this._chatService.findAllMessages(param);
       if(result == null) {
           result = await this._chatService.findByName(param);
       }
