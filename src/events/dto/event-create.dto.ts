@@ -1,3 +1,5 @@
+import {ICard} from '../../schemas/card.shema';
+
 export class EventCreateDto {
   name: string;
   type: string;
@@ -6,4 +8,5 @@ export class EventCreateDto {
   date: Date;
   members: string[];
   creator: string;
+  boardId: string;
 }

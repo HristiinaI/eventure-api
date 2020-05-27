@@ -1,5 +1,5 @@
 import * as mongoose from 'mongoose';
-
+import {ICard} from "../schemas/card.shema";
 
 export const BoardSchema = new mongoose.Schema({
   name: {
@@ -10,17 +10,13 @@ export const BoardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  lists: {
+  cards: {
     type: [],
   },
-  event: {
-    type: mongoose.Schema.Types.ObjectId, ref: 'Event', 
-  }
-  
 });
 
 export interface IBoard extends mongoose.Document {
   name: string;
   eventId: string;
-  lists: string[];
+  cards: ICard[];
 }

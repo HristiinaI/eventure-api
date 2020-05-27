@@ -3,11 +3,13 @@ import {InjectModel} from '@nestjs/mongoose';
 import {IEvent} from '../schemas/event.shema';
 import {Model} from 'mongoose';
 import { EventCreateDto } from './dto/event-create.dto';
+import { IBoard } from 'src/schemas/board.shema';
 
 @Injectable()
 export class EventsService {
   constructor(@InjectModel('Event') 
-    private readonly eventModel: Model<IEvent>) {}
+    private readonly eventModel: Model<IEvent>,
+    ) {}
 
   async create(eventCreateDto: EventCreateDto): Promise<IEvent> {
     const createdEvent = new this.eventModel(eventCreateDto);
@@ -40,7 +42,7 @@ export class EventsService {
     return await this.eventModel.findByIdAndUpdate(id, eventCreateDto,
        {new: true}).exec();
   }
-  async delete(id: string) {
-    await this.eventModel.deleteOne({_id: id});
+  async delete(id: string) : Promise<IEvent> {
+   return await this.eventModel.findByIdAndDelete(id).exec();
   }
 }

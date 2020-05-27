@@ -7,7 +7,7 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { BoardModule } from './board/board.module';
-import { ListsModule } from './list/lists.module';
+import { CardsModule } from './cards/cards.module'; 
 
 import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
@@ -17,6 +17,8 @@ import { ChatModule } from './chat/chat.module';
     UsersModule,
     OrganizationsModule,
     EventsModule,
+    BoardModule,
+    CardsModule,
     MessageModule,
     ChatModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
