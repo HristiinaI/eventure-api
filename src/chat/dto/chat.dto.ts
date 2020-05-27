@@ -1,4 +1,4 @@
-import { IMessage } from "src/message/interfaces/message.interface";
+import { IMessage } from 'src/message/interfaces/message.interface';
 
 export class ChatDto {
     name: string;

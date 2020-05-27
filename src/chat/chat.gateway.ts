@@ -4,7 +4,7 @@ import {
   WsResponse,
   WebSocketServer,
   OnGatewayConnection,
-  OnGatewayDisconnect
+  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
 
@@ -16,10 +16,9 @@ import { MessageService } from '../message/message.service';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io';
 
-@WebSocketGateway(1080, { namespace: 'chats' })
+@WebSocketGateway()
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
-  @WebSocketServer()
-  server;
+  @WebSocketServer() server;
   private logger: Logger = new Logger('ChatGateway');
 
   connectedUsers: string[] = [];
@@ -28,6 +27,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private jwtService: JwtService,
     private chatService: ChatService,
     private messageService: MessageService,
+
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -38,9 +38,9 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     this.connectedUsers = [...this.connectedUsers, String(user._id)];
 
-    // Send list of connected users
     this.server.emit('users', this.connectedUsers);
 
+    socket.emit('join');
   }
 
   async handleDisconnect(socket: Socket) {
@@ -57,32 +57,36 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
       ];
     }
 
-    // Sends the new list of connected users
     this.server.emit('users', this.connectedUsers);
   }
 
   @SubscribeMessage('message')
   async onMessage(client: Socket, data: MessageDto) {
+
     const event: string = 'message';
     const result = data;
 
-    // await this.messageService.create(data);
     await this.chatService.updateMessages(data.chatId, data);
     client.broadcast.to(result.chatId).emit(event, result.message);
 
     return Observable.create(observer =>
-      observer.next({ event, data: result.message })
+      observer.next({ event, data: result.message }),
     );
   }
 
   @SubscribeMessage('join')
-  async onRoomJoin(client: Socket, data: MessageDto): Promise<any> {
-    client.join(data.chatId);
+  async onRoomJoin(client: Socket) {
+    // const test = await this.chatService.findById(client.handshake.query.chatId);
 
-    const messages = await this.chatService.getMessages(data.chatId, 25);
+    client.join(client.handshake.query.id);
+    const chat = await this.chatService.findById(client.handshake.query.id);
+    let messages = [];
+    for (let i = 0; i < chat.messages.length; i++) {
+      messages[i] = chat.messages[i].message;
+    }
+    return messages;
 
-    // Send last messages to the connected user
-    client.emit('message', messages);
+    // client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')

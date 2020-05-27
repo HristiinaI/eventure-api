@@ -11,17 +11,6 @@ export class AuthService {
     private readonly jwtService: JwtService,
   ) {}
 
-  private async checkUserPassword(
-    signedUser: IUser,
-    password: string,
-  ): Promise<Boolean> {
-    if (signedUser.password !== password) {
-      return false;
-    }
-
-    return true;
-  }
-
   async sign( email: string, password: string): Promise<any> {
     const user = await this.usersService.findByEmail(email);
     if (!user) {
@@ -34,7 +23,7 @@ export class AuthService {
     const isValid = await this.checkUserPassword(user, password);
     if (!isValid) {
       throw new HttpException(
-        'The email/password combinaison is invalid',
+        'The email/password combination is invalid',
         HttpStatus.BAD_REQUEST,
       );
     }
@@ -44,10 +33,19 @@ export class AuthService {
     return { tokens, user };
   }
 
+
   async refreshToken(token: string): Promise<any> {
     const user: IUser = await this.jwtService.verify(token);
     const tokens = await this.jwtService.generateToken(user);
 
     return { tokens, user };
+  }
+
+  private async checkUserPassword(
+    signedUser: IUser,
+    password: string,
+  ): Promise<Boolean> {
+    return signedUser.password === password;
+
   }
 }
