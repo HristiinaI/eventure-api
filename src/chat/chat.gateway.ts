@@ -4,7 +4,7 @@ import {
   WsResponse,
   WebSocketServer,
   OnGatewayConnection,
-  OnGatewayDisconnect
+  OnGatewayDisconnect,
 } from '@nestjs/websockets';
 import { Observable } from 'rxjs';
 
@@ -16,7 +16,7 @@ import { MessageService } from '../message/message.service';
 import { Logger } from '@nestjs/common';
 import { Socket } from 'socket.io';
 
-@WebSocketGateway(1080)
+@WebSocketGateway()
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server;
   private logger: Logger = new Logger('ChatGateway');
@@ -27,6 +27,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     private jwtService: JwtService,
     private chatService: ChatService,
     private messageService: MessageService,
+
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -39,6 +40,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
     this.server.emit('users', this.connectedUsers);
 
+    socket.emit('join');
   }
 
   async handleDisconnect(socket: Socket) {
@@ -60,6 +62,7 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('message')
   async onMessage(client: Socket, data: MessageDto) {
+
     const event: string = 'message';
     const result = data;
 
@@ -67,17 +70,23 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     client.broadcast.to(result.chatId).emit(event, result.message);
 
     return Observable.create(observer =>
-      observer.next({ event, data: result.message })
+      observer.next({ event, data: result.message }),
     );
   }
 
   @SubscribeMessage('join')
-  async onRoomJoin(client: Socket, data: MessageDto): Promise<any> {
-    client.join(data.chatId);
+  async onRoomJoin(client: Socket) {
+    // const test = await this.chatService.findById(client.handshake.query.chatId);
 
-    const messages = await this.chatService.getMessages(data.chatId, 30);
+    client.join(client.handshake.query.id);
+    const chat = await this.chatService.findById(client.handshake.query.id);
+    let messages = [];
+    for (let i = 0; i < chat.messages.length; i++) {
+      messages[i] = chat.messages[i].message;
+    }
+    return messages;
 
-    client.emit('message', messages);
+    // client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')

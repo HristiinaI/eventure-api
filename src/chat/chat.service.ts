@@ -6,6 +6,7 @@ import { ChatDto } from './dto/chat.dto';
 import { IUser } from 'src/users/interfaces/user.interface';
 import { IOrganization } from 'src/organizations/interfaces/organization.interface';
 import { MessageDto } from '../message/dto/message.dto';
+import { IMessage } from '../message/interfaces/message.interface';
 
 @Injectable()
 export class ChatService {
@@ -39,7 +40,7 @@ export class ChatService {
   }
 
   async getMessages(id: string, limit: number) {
-    let chat = await this.chatModel.findWithLimit(id, limit);
+    let chat = await this.chatModel.findWithLimit(id, limit).exec();
 
     // Create the user room, if isn't already exist
     if (!chat) {
@@ -50,14 +51,13 @@ export class ChatService {
     return chat.messages;
   }
 
-  async findAllMessages(id: string) {
+  async findAllMessages(id: string): Promise<IMessage[]> {
     const chat = await this.chatModel.findById(id).exec();
     /*const messages = [];
-    for(let i = 0; i < chat.messages.length; i++) {
+    for (let i = 0; i < chat.messages.length; i++) {
       messages.push(chat.messages[i].message);
-    }
+    }*/
 
-    return new Array(messages);*/
     return chat.messages;
   }
 

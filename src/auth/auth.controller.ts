@@ -12,7 +12,7 @@ export class AuthController {
   async login(@Request() req): Promise<any> {
     const body = req.body;
 
-    if (!body) { 
+    if (!body) {
       throw new HttpException('Body is missing',
        HttpStatus.BAD_REQUEST); }
     if (!body.email || !body.password) { 

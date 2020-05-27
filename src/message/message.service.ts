@@ -58,10 +58,10 @@ export class MessageService {
     } else if (await this.isUser(messageDto) != null) {
         messageDto.isUser = true;
     }
-    this.chatGateway.handleConnection(this.socket);
-    this.chatGateway.onMessage(this.socket, messageDto);
-    this.chatGateway.handleDisconnect(this.socket);
-    return await message.save();
+    // this.chatGateway.handleConnection(this.socket);
+    // this.chatGateway.onMessage(this.socket, messageDto);
+    // this.chatGateway.handleDisconnect(this.socket);
+    return message.save();
   }
 
   async isUser(messageDto: MessageDto): Promise<IUser> {
