@@ -20,7 +20,6 @@ import { MessageModule } from './message/message.module';
     EventsModule,
     BoardModule,
     CardsModule,
-    MessageModule,
     ChatModule,
     MessageModule,
     AuthModule,
