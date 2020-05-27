@@ -1,14 +1,14 @@
-import { 
-  Controller, 
-  Get, 
-  HttpException, 
-  Param, 
-  HttpStatus, 
-  Post, 
-  Body, 
-  Put, 
-  Delete, 
-  Query 
+import {
+  Controller,
+  Get,
+  HttpException,
+  Param,
+  HttpStatus,
+  Post,
+  Body,
+  Put,
+  Delete,
+  Query,
 } from '@nestjs/common';
 import { MessageService } from './message.service';
 import { MessageDto } from './dto/message.dto';
@@ -18,12 +18,13 @@ import { ChatService } from 'src/chat/chat.service';
 export class MessageController {
   // tslint:disable-next-line:variable-name
   constructor(private _messageService: MessageService,
-    private _chatService: ChatService) {}
+              // tslint:disable-next-line:variable-name
+              private _chatService: ChatService) {}
 
   @Post()
   async create(@Body() messageDto: MessageDto) {
     const result = await this._messageService.create(messageDto);
-    await this._chatService.updateMessages(result.chatId, messageDto.message);
+    await this._chatService.updateMessages(result.chatId, messageDto);
     return {ok: true, result};
   }
 
@@ -39,7 +40,7 @@ export class MessageController {
   @Get()
   async findByParam(@Query('param') param: string) {
     let result = null;
-    if(param) {
+    if (param) {
       result = await this._messageService.findAllPerChatId(param);
     } else {
       result = this._messageService.findAll();

@@ -1,6 +1,8 @@
-export default {
-    jwt: {
-        secretOrKey: 'secret',
-        expiresIn: 36000000,
+export const APP_CONFIG = {
+    accessTokenExpires: '30s',
+    refreshTokenExpires: '1m',
+    jwtSecret: 'secretKey',
+    jwtSession: {
+        session: false,
     },
-}
+};

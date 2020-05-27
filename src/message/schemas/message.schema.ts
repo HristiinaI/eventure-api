@@ -16,5 +16,4 @@ export const MessageSchema = new Schema({
     message: {
         type: String,
     },
-    
 });

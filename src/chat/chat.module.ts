@@ -7,13 +7,21 @@ import { UserSchema } from 'src/users/schemas/users.schemas';
 import { UsersModule } from 'src/users/users.module';
 import { OrganizationSchema } from 'src/organizations/schemas/organization.schema';
 import { OrganizationsModule } from 'src/organizations/organizations.module';
+import { ChatGateway } from './chat.gateway';
+import { MessageModule } from '../message/message.module';
+import { JwtService } from '../auth/jwt/jwt.service';
+import { MessageService } from '../message/message.service';
+import { MessageSchema } from '../message/schemas/message.schema';
 
 @Module({
-    imports: [MongooseModule.forFeature([{name: 'Chat', schema: ChatSchema},
-    {name: 'User', schema: UserSchema},
-    {name: 'Organization', schema: OrganizationSchema}])],
+    imports: [MongooseModule.forFeature([
+        {name: 'Message', schema: MessageSchema},
+        {name: 'User', schema: UserSchema},
+        {name: 'Organization', schema: OrganizationSchema},
+        {name: 'Chat', schema: ChatSchema},
+    ]), UsersModule],
     controllers: [ChatController],
-    providers: [ChatService, UsersModule, OrganizationsModule],
-    exports: [ChatService],
+    providers: [ChatService, ChatGateway, UsersModule, OrganizationsModule, JwtService, MessageService],
+    exports: [ChatService, JwtService],
 })
 export class ChatModule {}

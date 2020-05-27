@@ -7,10 +7,11 @@ import { ConfigModule } from '@nestjs/config';
 import { MongooseModule } from '@nestjs/mongoose';
 import { OrganizationsModule } from './organizations/organizations.module';
 import { BoardModule } from './board/board.module';
-import { CardsModule } from './cards/cards.module'; 
+import { CardsModule } from './cards/cards.module';
 
-import { MessageModule } from './message/message.module';
 import { ChatModule } from './chat/chat.module';
+import { AuthModule } from './auth/auth.module';
+import { MessageModule } from './message/message.module';
 
 @Module({
   imports: [
@@ -21,6 +22,8 @@ import { ChatModule } from './chat/chat.module';
     CardsModule,
     MessageModule,
     ChatModule,
+    MessageModule,
+    AuthModule,
     MongooseModule.forRoot('mongodb://localhost/nest'),
     ConfigModule.forRoot(),
   ],
