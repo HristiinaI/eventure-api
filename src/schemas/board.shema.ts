@@ -10,13 +10,13 @@ export const BoardSchema = new mongoose.Schema({
     type: String,
     required: true,
   },
-  cards: {
-    type: [],
-  },
+  // cards: {
+  //   type: [],
+  // },
 });
 
 export interface IBoard extends mongoose.Document {
   name: string;
   eventId: string;
-  cards: ICard[];
+  // cards: ICard[];
 }

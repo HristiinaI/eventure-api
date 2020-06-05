@@ -16,11 +16,11 @@ export class EventsService {
     return createdEvent.save();
   }
   async findAll(): Promise<IEvent[]> {
-    return await this.eventModel.find().populate('Board').exec();
+    return await this.eventModel.find().exec();
   }
 
   async findEventById(id: string): Promise<IEvent> {
-    return await this.eventModel.findById(id).populate('Board').exec();
+    return await this.eventModel.findById(id).exec();
   }
   async findByName(name: string): Promise<IEvent> {
     try {
@@ -31,7 +31,7 @@ export class EventsService {
     }
   }
 
-  async findByCreator(creator: string): Promise<IEvent> {
+  async findByCreator(creator: string): Promise<IEvent[]> {
     try {
       return await this.eventModel.find({ creator }).exec();
     } catch (Exception) {

@@ -30,14 +30,14 @@ export class BoardService {
     return await this.boardModel.findById(id).exec();
   }
 
-  async updateCards(id: string, cardCreateDto: CardCreateDto): Promise<ICard> {
-    const board = await this.boardModel.findById(id).exec();
-    await board.cards.push(cardCreateDto);
-    try {
-      return await this.boardModel.findByIdAndUpdate(id, {cards: board.cards}, {new: true}).exec();
-    } catch (Exception) {
-      return null;
-    }
-  }
+  // async updateCards(cardCreateDto: CardCreateDto): Promise<ICard> {
+  //   const board = await this.boardModel.findById(cardCreateDto.boardId).exec();
+  //   await board.cards.push(cardCreateDto);
+  //   try {
+  //     return await this.boardModel.findByIdAndUpdate(cardCreateDto.boardId, {cards: board.cards}, {new: true}).exec();
+  //   } catch (Exception) {
+  //     return null;
+  //   }
+  // }
 
 }

@@ -38,4 +38,11 @@ export class CardsService {
         return deleteCard;
       }
 
+      async findAllPerBoardId(boardId: string): Promise<ICard[]> {
+        try {
+          return await this.cardModel.find({boardId}).exec();
+        } catch (Exception) {
+          return null;
+        }
+      }
 }
