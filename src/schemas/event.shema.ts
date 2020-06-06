@@ -29,6 +29,9 @@ export const EventSchema = new mongoose.Schema({
   boardId: {
     type: String,
   },
+  chatId: {
+    type: String,
+  }
 });
 
 export interface IEvent extends mongoose.Document {
@@ -40,4 +43,5 @@ export interface IEvent extends mongoose.Document {
   creator: string;
   about: string;
   boardId: string;
+  chatId: string
 }

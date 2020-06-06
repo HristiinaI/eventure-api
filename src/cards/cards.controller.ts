@@ -15,14 +15,14 @@ export class CardsController {
       return {ok: true, result};
     }
 
-    // @Get(':id')
-    // async findCardById(@Param('id') id: string) {
-    //   const result = await this._cardService.findCardtById(id);
-    //   if (result == null) {
-    //     throw new HttpException('Board not found', HttpStatus.NOT_FOUND);
-    //   }
-    //   return result;
-    // }
+    @Get(':id')
+    async findCardById(@Param() id: string) {
+      const result = await this._cardService.findCardtById(id);
+      if (result == null) {
+        throw new HttpException('Board not found', HttpStatus.NOT_FOUND);
+      }
+      return result;
+    }
     
     @Get()
     async findByParam(@Query('param') param: string) {

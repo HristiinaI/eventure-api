@@ -9,4 +9,5 @@ export class EventCreateDto {
   members: string[];
   creator: string;
   boardId: string;
+  chatId: string
 }
