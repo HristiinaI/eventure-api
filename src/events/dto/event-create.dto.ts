@@ -1,4 +1,3 @@
-import {ICard} from '../../schemas/card.shema';
 
 export class EventCreateDto {
   name: string;

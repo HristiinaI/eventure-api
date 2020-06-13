@@ -33,10 +33,9 @@ export class CardsService {
         return updatedCard;
       }
 
-    async delete(id: string): Promise<any> {
-        const deleteCard = await this.cardModel.findByIdAndRemove(id);
-        return deleteCard;
-      }
+      async delete(id: string) : Promise<ICard> {
+        return await this.cardModel.findByIdAndDelete(id).exec();
+       }
 
       async findAllPerBoardId(boardId: string): Promise<ICard[]> {
         try {

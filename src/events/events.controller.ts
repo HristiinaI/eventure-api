@@ -21,13 +21,20 @@ export class EventsController {
     }
 
   @Get()
-    async find(@Query('name') name: string, @Query('creator')creator: string) {
+    async find(@Query('name') name: string, @Query('creator')creator: string, @Query('email')email: string,
+              @Query('id')id: string, @Query('member')member: string
+    ) {
       let result = null;
       if (name) {
           result = await this._eventService.findByName(name);
         } else if (creator){
           result = await this._eventService.findByCreator(creator);
-        } else {
+        }else if (email){
+          result = await this._eventService.findEventsByEmail(email);
+        }else if(member){
+          result = await this._eventService.updateMembers(id, member)
+        }
+         else {
           result = this._eventService.findAll();
         }
       if (result == null) {
