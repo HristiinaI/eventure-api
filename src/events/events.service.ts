@@ -3,7 +3,6 @@ import {InjectModel} from '@nestjs/mongoose';
 import {IEvent} from '../schemas/event.shema';
 import {Model} from 'mongoose';
 import { EventCreateDto } from './dto/event-create.dto';
-import { IBoard } from 'src/schemas/board.shema';
 
 @Injectable()
 export class EventsService {
