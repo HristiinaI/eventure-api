@@ -19,15 +19,12 @@ import { Socket } from 'socket.io';
 @WebSocketGateway()
 export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
   @WebSocketServer() server;
-  private logger: Logger = new Logger('ChatGateway');
 
   connectedUsers: string[] = [];
 
   constructor(
     private jwtService: JwtService,
     private chatService: ChatService,
-    private messageService: MessageService,
-
   ) {}
 
   async handleConnection(socket: Socket) {
@@ -37,8 +34,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
     );
 
     this.connectedUsers = [...this.connectedUsers, String(user._id)];
-
-    this.server.emit('users', this.connectedUsers);
 
     socket.emit('join');
   }
@@ -56,8 +51,6 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
         ...this.connectedUsers.slice(userPos + 1),
       ];
     }
-
-    this.server.emit('users', this.connectedUsers);
   }
 
   @SubscribeMessage('message')
@@ -76,17 +69,13 @@ export class ChatGateway implements OnGatewayConnection, OnGatewayDisconnect {
 
   @SubscribeMessage('join')
   async onRoomJoin(client: Socket) {
-    // const test = await this.chatService.findById(client.handshake.query.chatId);
-
     client.join(client.handshake.query.id);
     const chat = await this.chatService.findById(client.handshake.query.id);
-    let messages = [];
+    const messages: string[] = [];
     for (let i = 0; i < chat.messages.length; i++) {
       messages[i] = chat.messages[i].message;
     }
     return messages;
-
-    // client.emit('message', messages);
   }
 
   @SubscribeMessage('leave')

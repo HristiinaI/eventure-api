@@ -10,5 +10,5 @@ export const ChatSchema = new Schema({
     }],
 
     messages: [],
-    
+
 });

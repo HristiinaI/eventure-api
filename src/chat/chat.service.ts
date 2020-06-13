@@ -71,14 +71,14 @@ export class ChatService {
         await user.chats.push(chat._id);
         await this.userModel.
         findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
-        chat.members[i] = user._id;
+        chat.members[i] = user.email;
       } else {
         user = await this.organizationModel.
         findOne({name: chatDto.members[i]}).exec();
         await user.chats.push(chat._id);
         await this.organizationModel.
         findByIdAndUpdate(user._id, {chats: user.chats}, {new: true}).exec();
-        chat.members[i] = user._id;
+        chat.members[i] = user.name;
       }
     }
     return await chat.save();

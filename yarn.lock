@@ -348,9 +348,9 @@
     webpack-node-externals "1.7.2"
 
 "@nestjs/common@^7.0.3":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.1.1.tgz#1896e4898688f8b0c527a76c5b090882de268b39"
-  integrity sha512-ZcFbHw2LEkTG9lR84ysNutHnrZPiRYjdjHM7nDCz0zXra98Cu4mKw0wOdoMmtd6WFtpVaSd9JVMXYWvHleFzmw==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/common/-/common-7.1.3.tgz#e89ec4891cf2219cfb943d0f46dcbfd583da757c"
+  integrity sha512-b+hXo+WA5CKweFA9qvInJY6bf+IBCpqxkt2KCkI+vAVLkTghrIGV7Us/HL/yOBAGc+wSiPKAJkBHtVkkFLnw1w==
   dependencies:
     axios "0.19.2"
     cli-color "2.0.0"
@@ -370,9 +370,9 @@
     uuid "7.0.2"
 
 "@nestjs/core@^7.0.3":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-7.1.1.tgz#ff1fef34ed9c81d8a58ad584a928fb465eb85d1a"
-  integrity sha512-YOMyjWAOtYy1pzz4OsEKSujLKEeY0YML3HPekQPpC2fcgWHBtt0CMJ9RK4385FSltcFW13PgHUzLmcqUgrJTNQ==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/core/-/core-7.1.3.tgz#a6320277c8693c4b82b35435df392214eeadc08c"
+  integrity sha512-9HrQQUGeH8W21kFc9ktClQw38I7Bqy7ZOQ/cD7+wI5UdrTGzuZxzYHQTxGa/QJceR+iwTgv0ywkl5XdP3glKvA==
   dependencies:
     "@nuxtjs/opencollective" "0.2.2"
     fast-safe-stringify "2.0.7"
@@ -401,9 +401,9 @@
   integrity sha512-ZJk08zqLxSXY1rXIt9dAK7tcCos3DETQ88Nn/UGmA136SHMG5P0sbw+PU1zfLQyEsU5uHyr7MTD+/S+aOxXS6w==
 
 "@nestjs/platform-express@^7.0.3":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-7.1.1.tgz#25a5b2c84adf87da5a68c74fdbe1cc28567a39d9"
-  integrity sha512-g8XNSFTtzsABelQ0uBveCeh6Jf7mUDfGHOXDybaEP//tM+cLU2vbzDYJSHaL68PfGCbhtvzaMiK9ezIWdW9rWg==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-express/-/platform-express-7.1.3.tgz#0af9399082995ce8eae409593b9f1aa649e16ca1"
+  integrity sha512-hMwTCRrtXoRsif5sNlZLN/jDgMQztJOjYjoOmMSgvzgWZPoI0CBGF941ZmLcEwovxr0XyWP9Oir1oMelkTbpqA==
   dependencies:
     body-parser "1.19.0"
     cors "2.8.5"
@@ -412,9 +412,9 @@
     tslib "2.0.0"
 
 "@nestjs/platform-socket.io@^7.0.3":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-7.1.1.tgz#620f7f87f426b13d4e2facdf90c9642f3067de5a"
-  integrity sha512-PhJ84BdoAUK7fmAIpXlsdlx9Fle7yHpi7OJFYkNx+a3Vc3hHsHA9rcAk3VqnZWbhvrxn+qK2TDN6UOrEFWE4Zw==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/platform-socket.io/-/platform-socket.io-7.1.3.tgz#0c9f51134594aa8bbbcf75efb80719025b488acc"
+  integrity sha512-pbAnnqhCXGX/65KAlBDeCXemac5OSiFGaghuGnC2B1hFXeHWks77LcM8urhTvu4AoQQRvo4wmbrPFAFb15gLng==
   dependencies:
     socket.io "2.3.0"
     tslib "2.0.0"
@@ -437,9 +437,9 @@
     tslib "1.11.1"
 
 "@nestjs/websockets@^7.0.3":
-  version "7.1.1"
-  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-7.1.1.tgz#ef3d837a3a5219451331e34e3bb1321e475c3495"
-  integrity sha512-/3ER9WWAA+RADYANqnbioXtuM1DsfZLzCHNuL+KMkgwD+xar4hcskgfDJx56EWSYqyyh20SMfOTDDRSF+MZe7Q==
+  version "7.1.3"
+  resolved "https://registry.yarnpkg.com/@nestjs/websockets/-/websockets-7.1.3.tgz#6f8cbeabf25883333f1351b2f8d6aa93d0c8739f"
+  integrity sha512-khwbLqcxDLkUvZkRh3aADRXTfFRdx5OkbyaB+FpnJ9xIZgg5iv5WYOdU0A+8YxbOV0YFER0NOsWNYUveNvuXwQ==
   dependencies:
     iterare "1.2.0"
     tslib "2.0.0"
@@ -608,9 +608,9 @@
   integrity sha512-FwI9gX75FgVBJ7ywgnq/P7tw+/o1GUbtP0KzbtusLigAOgIgNISRK0ZPl4qertvXSIE8YbsVJueQ90cDt9YYyw==
 
 "@types/node@*":
-  version "14.0.5"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.5.tgz#3d03acd3b3414cf67faf999aed11682ed121f22b"
-  integrity sha512-90hiq6/VqtQgX8Sp0EzeIsv3r+ellbGj4URKj5j30tLlZvRUpnAe9YbYnjl3pJM93GyXU0tghHhvXHq+5rnCKA==
+  version "14.0.13"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-14.0.13.tgz#ee1128e881b874c371374c1f72201893616417c9"
+  integrity sha512-rouEWBImiRaSJsVA+ITTFM6ZxibuAlTuNOCyxVbwreu6k6+ujs7DfnU9o+PShFhET78pMBl3eH+AGSI5eOTkPA==
 
 "@types/node@^12.7.5":
   version "12.12.11"
@@ -1858,9 +1858,9 @@ concat-stream@^1.5.0, concat-stream@^1.5.2:
     typedarray "^0.0.6"
 
 consola@^2.3.0:
-  version "2.12.2"
-  resolved "https://registry.yarnpkg.com/consola/-/consola-2.12.2.tgz#9610f158e7b0a9ecc8f8bb0c4fc8e7c52bf41d05"
-  integrity sha512-c9mzemrAk57s3UIjepn8KKkuEH5fauMdot5kFSJUnqHcnApVS9Db8Rbv5AZ1Iz6lXzaGe9z1crQXhJtGX4h/Og==
+  version "2.13.0"
+  resolved "https://registry.yarnpkg.com/consola/-/consola-2.13.0.tgz#5a4dc75e1b1fddbd8b10728e7790a2e54efeeeb7"
+  integrity sha512-Jw+8qpL0yrpfqH9m90fWoDRQyn8TYU6Aegpl4UofoP81VYvQLoOWMpFw2vQ3U/cyLRRzTc/CyNC6YYVzZFU8Eg==
 
 console-browserify@^1.1.0:
   version "1.2.0"
@@ -2293,9 +2293,9 @@ end-of-stream@^1.0.0, end-of-stream@^1.1.0:
     once "^1.4.0"
 
 engine.io-client@~3.4.0:
-  version "3.4.2"
-  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-3.4.2.tgz#4fb2ef2b1fe1d3aa1c621c6a8d87f1fc55426b50"
-  integrity sha512-AWjc1Xg06a6UPFOBAzJf48W1UR/qKYmv/ubgSCumo9GXgvL/xGIvo05dXoBL+2NTLMipDI7in8xK61C17L25xg==
+  version "3.4.3"
+  resolved "https://registry.yarnpkg.com/engine.io-client/-/engine.io-client-3.4.3.tgz#192d09865403e3097e3575ebfeb3861c4d01a66c"
+  integrity sha512-0NGY+9hioejTEJCaSJZfWZLk4FPI9dN+1H1C4+wj2iuFba47UgZbJzfWs4aNFajnX/qAaYKbe2lLTfEEWzCmcw==
   dependencies:
     component-emitter "~1.3.0"
     component-inherit "0.0.3"
@@ -2321,9 +2321,9 @@ engine.io-parser@~2.2.0:
     has-binary2 "~1.0.2"
 
 engine.io@~3.4.0:
-  version "3.4.1"
-  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-3.4.1.tgz#a61cbc13fa0cb27d9453fd079a29ee980564b069"
-  integrity sha512-8MfIfF1/IIfxuc2gv5K+XlFZczw/BpTvqBdl0E2fBLkYQp4miv4LuDTVtYt4yMyaIFLEr4vtaSgV4mjvll8Crw==
+  version "3.4.2"
+  resolved "https://registry.yarnpkg.com/engine.io/-/engine.io-3.4.2.tgz#8fc84ee00388e3e228645e0a7d3dfaeed5bd122c"
+  integrity sha512-b4Q85dFkGw+TqgytGPrGgACRUhsdKc9S9ErRAXpPGy/CXKs4tYoHDkvIRdsseAF7NjfVwjRFIn6KTnbw7LwJZg==
   dependencies:
     accepts "~1.3.4"
     base64id "2.0.0"
@@ -6815,6 +6815,11 @@ uuid@^3.3.2:
   version "3.3.3"
   resolved "https://registry.yarnpkg.com/uuid/-/uuid-3.3.3.tgz#4568f0216e78760ee1dbf3a4d2cf53e224112866"
   integrity sha512-pW0No1RGHgzlpHJO1nsVrHKpOEIxkGg1xB+v0ZmdNH5OAeAwzAVrCnI2/6Mtx+Uys6iaylxa+D3g4j63IKKjSQ==
+
+uuid@^8.1.0:
+  version "8.1.0"
+  resolved "https://registry.yarnpkg.com/uuid/-/uuid-8.1.0.tgz#6f1536eb43249f473abc6bd58ff983da1ca30d8d"
+  integrity sha512-CI18flHDznR0lq54xBycOVmphdCYnQLKn8abKn7PXUiKUGdEd+/l9LWNJmugXel4hXq7S+RMNl34ecyC9TntWg==
 
 validate-npm-package-license@^3.0.1:
   version "3.0.4"

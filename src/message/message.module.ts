@@ -10,7 +10,6 @@ import { OrganizationSchema } from 'src/organizations/schemas/organization.schem
 import { ChatModule } from 'src/chat/chat.module';
 import { ChatSchema } from 'src/chat/schemas/chat.schema';
 import { ChatService } from 'src/chat/chat.service';
-import { ChatGateway } from '../chat/chat.gateway';
 import { JwtService } from '../auth/jwt/jwt.service';
 import { UsersService } from '../users/users.service';
 

@@ -43,13 +43,13 @@ export class OrganizationsService {
         if(!isOrgReg) {
           for(let i = 0; i < organizationDto.members.length; i++) {
             var user = await this.userModel.findOne({email: organizationDto.members[i]}).exec();
-            organizationDto.members[i] = user._id;
+            organizationDto.members[i] = user.email;
           }
           var org = new this.organizationModel(organizationDto);
-          org.role = "Organization";
+          org.role = 'Organization';
           for(let i = 0; i < org.members.length; i++) {
-            var user = await this.userModel.findById(org.members[i]).exec();
-            await user.organizations.push(org._id);
+            var user = await this.userModel.findOne({email: org.members[i]}).exec();
+            await user.organizations.push(org.name);
             await this.userModel.findByIdAndUpdate(user._id, {organizations: user.organizations}, {new: true}).exec();
           }
           return await org.save();

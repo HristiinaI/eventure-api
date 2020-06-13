@@ -5,8 +5,6 @@ import { IMessage } from './interfaces/message.interface';
 import { MessageDto } from './dto/message.dto';
 import { IUser } from 'src/users/interfaces/user.interface';
 import { IOrganization } from 'src/organizations/interfaces/organization.interface';
-import { Socket } from 'socket.io';
-import { ChatGateway } from '../chat/chat.gateway';
 import { JwtService } from '../auth/jwt/jwt.service';
 import { ChatService } from '../chat/chat.service';
 
@@ -17,8 +15,6 @@ export class MessageService {
               @InjectModel('Organization') private readonly organizationModel: Model<IOrganization>,
               private jwtService: JwtService, private chatService: ChatService) {}
 
-  chatGateway: ChatGateway = new ChatGateway(this.jwtService, this.chatService, this);
-  socket: Socket;
   async findAll(): Promise<IMessage[]> {
       try {
         return await this.messageModel.find().exec();
@@ -58,9 +54,6 @@ export class MessageService {
     } else if (await this.isUser(messageDto) != null) {
         messageDto.isUser = true;
     }
-    // this.chatGateway.handleConnection(this.socket);
-    // this.chatGateway.onMessage(this.socket, messageDto);
-    // this.chatGateway.handleDisconnect(this.socket);
     return message.save();
   }
 
