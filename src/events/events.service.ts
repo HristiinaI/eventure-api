@@ -31,6 +31,14 @@ export class EventsService {
     }
   }
 
+  async findEventsByEmail(email: string): Promise<IEvent[]> {
+    try {
+      return await this.eventModel.find({members: email});
+    } catch (Exception) {
+      return null;
+    }
+  }
+
   async findByCreator(creator: string): Promise<IEvent[]> {
     try {
       return await this.eventModel.find({ creator }).exec();
@@ -44,5 +52,14 @@ export class EventsService {
   }
   async delete(id: string) : Promise<IEvent> {
    return await this.eventModel.findByIdAndDelete(id).exec();
+  }
+  async updateMembers(id: string, member: string){
+    const event = await this.eventModel.findById(id).exec();
+    await event.members.push(member);
+    try {
+      return await this.eventModel.findByIdAndUpdate(id, {members: event.members}, {new: true}).exec();
+    } catch (Exception) {
+      return null;
+    }
   }
 }
