@@ -51,10 +51,10 @@ export const UserSchema = new Schema({
         type: String,
     }],
 
-    // chats: [{
-    //     type: String,
-    // }],
-    
+     chats: [{
+         type: String,
+     }],
+
     role: {
         type: String,
     }
